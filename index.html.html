@@ -1,0 +1,4636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Scan | Next-Gen Adaptive Spectrum Monitoring</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       THEME VARIABLES: LIGHT (DEFAULT) & DARK
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --bg-page: #f8fafc;
+      --bg-gradient: 
+        radial-gradient(circle at 10% 15%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 90% 65%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(244, 63, 94, 0.08) 0%, transparent 50%),
+        linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+      
+      --top-ticker-bg: #ffffff;
+      --top-ticker-border: #e2e8f0;
+      --top-ticker-text: #64748b;
+      
+      --header-bg: rgba(255, 255, 255, 0.88);
+      --header-border: #e2e8f0;
+      
+      --panel: #ffffff;
+      --panel-glass: rgba(255, 255, 255, 0.85);
+      --panel-border: #e2e8f0;
+      --panel-border-hover: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --text-invert: #ffffff;
+
+      --card-bg: #ffffff;
+      --card-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+      --card-shadow-hover: 0 14px 28px -4px rgba(0, 0, 0, 0.09), 0 8px 12px -4px rgba(0, 0, 0, 0.05);
+
+      --canvas-bg: #f8fafc;
+      --canvas-border: #cbd5e1;
+      --canvas-grid: rgba(148, 163, 184, 0.35);
+      --canvas-axis-text: #64748b;
+      --canvas-hud-bg: rgba(255, 255, 255, 0.92);
+      --canvas-hud-text: #4f46e5;
+      --canvas-hud-border: #c7d2fe;
+      
+      --table-head-bg: #f1f5f9;
+      --table-border: #e2e8f0;
+      --table-hover: #f8fafc;
+      
+      --input-bg: #f8fafc;
+      --input-border: #cbd5e1;
+      --input-text: #0f172a;
+      
+      --toolbar-bg: #ffffff;
+      
+      --footer-bg: #f1f5f9;
+      --footer-border: #e2e8f0;
+      --footer-text: #64748b;
+
+      /* Vibrant Accent Palette */
+      --cyan: #0284c7;
+      --cyan-light: #e0f2fe;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+      --purple: #7c3aed;
+      --purple-light: #f5f3ff;
+      --pink: #db2777;
+      --pink-light: #fdf2f8;
+      
+      --high: #e11d48;
+      --high-light: #ffe4e6;
+      --high-border: #fecdd3;
+      
+      --medium: #d97706;
+      --medium-light: #fef3c7;
+      --medium-border: #fde68a;
+      
+      --low: #059669;
+      --low-light: #d1fae5;
+      --low-border: #a7f3d0;
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #060a12;
+      --bg-gradient: 
+        radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      
+      --top-ticker-bg: rgba(8, 14, 27, 0.95);
+      --top-ticker-border: rgba(56, 189, 248, 0.15);
+      --top-ticker-text: #64748b;
+      
+      --header-bg: rgba(6, 10, 18, 0.85);
+      --header-border: rgba(56, 189, 248, 0.15);
+      
+      --panel: rgba(13, 23, 42, 0.75);
+      --panel-glass: rgba(13, 23, 42, 0.85);
+      --panel-border: rgba(56, 189, 248, 0.15);
+      --panel-border-hover: rgba(56, 189, 248, 0.35);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --text-invert: #060a12;
+
+      --card-bg: rgba(13, 23, 42, 0.75);
+      --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --card-shadow-hover: 0 14px 30px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 242, 254, 0.15);
+
+      --canvas-bg: #040810;
+      --canvas-border: rgba(56, 189, 248, 0.25);
+      --canvas-grid: rgba(56, 189, 248, 0.08);
+      --canvas-axis-text: rgba(148, 163, 184, 0.6);
+      --canvas-hud-bg: rgba(6, 10, 18, 0.8);
+      --canvas-hud-text: #00f2fe;
+      --canvas-hud-border: rgba(0, 242, 254, 0.25);
+      
+      --table-head-bg: rgba(15, 23, 42, 0.9);
+      --table-border: rgba(255, 255, 255, 0.07);
+      --table-hover: rgba(56, 189, 248, 0.05);
+      
+      --input-bg: #0f192b;
+      --input-border: rgba(56, 189, 248, 0.2);
+      --input-text: #ffffff;
+      
+      --toolbar-bg: rgba(8, 14, 27, 0.6);
+      
+      --footer-bg: #030712;
+      --footer-border: rgba(255, 255, 255, 0.07);
+      --footer-text: #94a3b8;
+
+      /* Vibrant Accent Palette Dark */
+      --cyan: #00f2fe;
+      --cyan-light: rgba(0, 242, 254, 0.12);
+      --blue: #38bdf8;
+      --blue-light: rgba(56, 189, 248, 0.12);
+      --indigo: #6366f1;
+      --indigo-light: rgba(99, 102, 241, 0.12);
+      --purple: #8b5cf6;
+      --purple-light: rgba(139, 92, 246, 0.12);
+      --pink: #f43f5e;
+      --pink-light: rgba(244, 63, 94, 0.12);
+      
+      --high: #fb7185;
+      --high-light: rgba(244, 63, 94, 0.12);
+      --high-border: rgba(244, 63, 94, 0.35);
+      
+      --medium: #fbbf24;
+      --medium-light: rgba(245, 158, 11, 0.12);
+      --medium-border: rgba(245, 158, 11, 0.35);
+      
+      --low: #34d399;
+      --low-light: rgba(16, 185, 129, 0.12);
+      --low-border: rgba(16, 185, 129, 0.35);
+    }
+
+    /* ==========================================================================
+       GLOBAL RESETS & BASE STYLES
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      background-image: var(--bg-gradient);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Telemetry Ticker */
+    .telemetry-ticker {
+      background: var(--top-ticker-bg);
+      border-bottom: 1px solid var(--top-ticker-border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      padding: 7px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--top-ticker-text);
+      letter-spacing: 0.3px;
+    }
+    .ticker-left {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ticker-item span {
+      color: var(--indigo);
+      font-weight: 700;
+    }
+    .ticker-clock {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Navigation Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 7%;
+      background: var(--header-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .radar-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #06b6d4, #4f46e5, #9333ea);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      color: #fff;
+    }
+    .radar-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-title span.sub {
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(90deg, #0284c7, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    nav a:hover, nav a.active {
+      color: var(--indigo);
+      background: var(--indigo-light);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--low-light);
+      border: 1px solid var(--low-border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--low);
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--low);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--low);
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.85); }
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--card-shadow);
+      user-select: none;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--indigo);
+      color: var(--indigo);
+      transform: translateY(-1px);
+    }
+
+    .audio-toggle-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-dim);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--card-shadow);
+    }
+    .audio-toggle-btn:hover {
+      border-color: var(--indigo);
+      color: var(--indigo);
+    }
+    .audio-toggle-btn.active {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      background: var(--cyan-light);
+    }
+
+    /* Common Section */
+    section {
+      padding: 70px 7%;
+      position: relative;
+    }
+    .section-header {
+      margin-bottom: 28px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 10px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: var(--indigo-light);
+      color: var(--indigo);
+      border: 1px solid var(--indigo);
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 3.8vw, 44px);
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.8px;
+      margin-bottom: 10px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 720px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 60px;
+      padding-bottom: 50px;
+      position: relative;
+    }
+    .hero-glow-back {
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(244, 63, 94, 0.1) 70%, transparent 80%);
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 840px;
+    }
+    .hero-tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(219, 39, 119, 0.1));
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--indigo);
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 5.8vw, 70px);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+    .hero h1 span.gradient-text {
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 680px;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 26px;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: none;
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 50%, #06b6d4 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(79, 70, 229, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
+    }
+    .btn-secondary {
+      background: var(--panel);
+      color: var(--text-main);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--card-shadow);
+    }
+    .btn-secondary:hover {
+      border-color: var(--indigo);
+      color: var(--indigo);
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    /* Hero Live Telemetry Ribbon */
+    .hero-telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 48px;
+      padding: 18px 22px;
+      background: var(--panel-glass);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      box-shadow: var(--card-shadow);
+    }
+    .strip-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .strip-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .strip-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Metric Cards Grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 24px;
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: var(--panel-border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    .card-total::before { background: linear-gradient(90deg, #0284c7, #6366f1); }
+    .card-high::before { background: linear-gradient(90deg, #e11d48, #f43f5e); }
+    .card-medium::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
+    .card-low::before { background: linear-gradient(90deg, #059669, #34d399); }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-total .card-icon { background: var(--cyan-light); color: var(--cyan); }
+    .card-high .card-icon { background: var(--high-light); color: var(--high); }
+    .card-medium .card-icon { background: var(--medium-light); color: var(--medium); }
+    .card-low .card-icon { background: var(--low-light); color: var(--low); }
+
+    .value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 8px 0 6px 0;
+    }
+    .value.cyan { color: var(--cyan); }
+    .value.high { color: var(--high); }
+    .value.medium { color: var(--medium); }
+    .value.low { color: var(--low); }
+    
+    .card-meta {
+      font-size: 12.5px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Main Dashboard Panel */
+    .dashboard {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 28px;
+      box-shadow: var(--card-shadow);
+    }
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .spectrum-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .spectrum-title-wrap h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .spectrum-legend {
+      display: flex;
+      gap: 18px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-color {
+      width: 12px;
+      height: 4px;
+      border-radius: 2px;
+    }
+    .status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--low-light);
+      border: 1px solid var(--low-border);
+      color: var(--low);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status.paused {
+      background: var(--medium-light);
+      border-color: var(--medium-border);
+      color: var(--medium);
+    }
+
+    /* Canvas Spectrogram Container */
+    .canvas-wrap {
+      position: relative;
+      background: var(--canvas-bg);
+      border: 1px solid var(--canvas-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .canvas-hud {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--canvas-hud-text);
+      background: var(--canvas-hud-bg);
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--canvas-hud-border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      pointer-events: none;
+    }
+    canvas {
+      width: 100%;
+      height: 250px;
+      display: block;
+      cursor: crosshair;
+    }
+
+    /* Preset Buttons Bar */
+    .quick-presets {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding: 10px 14px;
+      background: linear-gradient(90deg, var(--indigo-light), var(--cyan-light));
+      border-radius: 10px;
+      border: 1px dashed var(--indigo);
+    }
+    .preset-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--indigo);
+      margin-right: 4px;
+    }
+    .preset-chip {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .preset-chip:hover {
+      background: var(--indigo);
+      color: #ffffff;
+      border-color: var(--indigo);
+      transform: translateY(-1px);
+    }
+    .preset-chip.critical:hover {
+      background: var(--high);
+      border-color: var(--high);
+    }
+
+    /* Controls Toolbar */
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 20px 0;
+      background: var(--toolbar-bg);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--card-shadow);
+    }
+    .toolbar .btn {
+      padding: 11px 20px;
+      font-size: 13.5px;
+    }
+    .toolbar-right {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+      flex-wrap: wrap;
+      flex-grow: 1;
+      justify-content: flex-end;
+    }
+    input, select {
+      background: var(--input-bg);
+      color: var(--input-text);
+      padding: 11px 16px;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    /* Signal Observation Table */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--table-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    thead {
+      background: var(--table-head-bg);
+    }
+    th {
+      color: var(--text-dim);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--table-border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px 18px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    tbody tr:hover {
+      background: var(--table-hover);
+    }
+    .signal-id-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--indigo);
+      background: var(--indigo-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: inline-block;
+    }
+    .freq-col {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .strength-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .meter-bar-bg {
+      width: 70px;
+      height: 6px;
+      background: var(--table-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .meter-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* Priority Badges */
+    .priority-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .priority-pill.high {
+      background: var(--high-light);
+      color: var(--high);
+      border: 1px solid var(--high-border);
+    }
+    .priority-pill.medium {
+      background: var(--medium-light);
+      color: var(--medium);
+      border: 1px solid var(--medium-border);
+    }
+    .priority-pill.low {
+      background: var(--low-light);
+      color: var(--low);
+      border: 1px solid var(--low-border);
+    }
+    .inspect-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    .inspect-btn:hover {
+      background: var(--indigo);
+      border-color: var(--indigo);
+      color: #ffffff;
+    }
+
+    /* Layout Grids */
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 25px;
+    }
+
+    /* Innovation Cards */
+    .innovation-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+    .innovation-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 21px;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .innovation-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Hardware Cards */
+    .hardware-card {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+    .hardware-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    .hardware-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--indigo);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .hardware-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .hardware-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .hardware-spec-tag {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .hardware-spec-tag span.active {
+      color: var(--low);
+    }
+
+    /* Dataflow Pipeline Diagram */
+    .pipeline-bar {
+      margin-top: 32px;
+      padding: 22px 26px;
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--card-shadow);
+    }
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .node-num {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+    }
+    .node-info {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .node-info small {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+    .pipeline-arrow {
+      color: var(--text-dim);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* SWOC Matrix with Vibrant Color Quadrants */
+    .swoc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+    .swoc-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .swoc-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .swoc-card li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .swoc-card li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .swoc-s { border-top: 4px solid #059669; }
+    .swoc-s h3 { color: #059669; }
+    .swoc-s li::before { content: '✔'; color: #059669; }
+
+    .swoc-w { border-top: 4px solid #d97706; }
+    .swoc-w h3 { color: #d97706; }
+    .swoc-w li::before { content: '⚠'; color: #d97706; }
+
+    .swoc-o { border-top: 4px solid #2563eb; }
+    .swoc-o h3 { color: #2563eb; }
+    .swoc-o li::before { content: '✦'; color: #2563eb; }
+
+    .swoc-c { border-top: 4px solid #e11d48; }
+    .swoc-c h3 { color: #e11d48; }
+    .swoc-c li::before { content: '⚡'; color: #e11d48; }
+
+    /* Modal Inspector Popup */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 560px;
+      padding: 32px;
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.25);
+      position: relative;
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .modal-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--indigo);
+      margin-bottom: 22px;
+      display: inline-block;
+    }
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .modal-stat {
+      background: var(--input-bg);
+      border: 1px solid var(--panel-border);
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .modal-stat-label {
+      font-size: 11.5px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .modal-stat-val {
+      font-size: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--footer-bg);
+      border-top: 1px solid var(--footer-border);
+      padding: 50px 7% 40px;
+      color: var(--footer-text);
+      position: relative;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .footer-left {
+      max-width: 480px;
+    }
+    .footer-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .footer-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 12.5px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+    .back-to-top {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--card-shadow);
+    }
+    .back-to-top:hover {
+      color: var(--indigo);
+      border-color: var(--indigo);
+    }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      header {
+        padding: 14px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .telemetry-ticker {
+        display: none;
+      }
+      nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      section {
+        padding: 50px 5%;
+      }
+      .pipeline-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .pipeline-arrow {
+        display: none;
+      }
+    }
+    @media(max-width: 600px) {
+      .toolbar-right {
+        margin-left: 0;
+        width: 100%;
+      }
+      .toolbar-right select, .toolbar-right input {
+        width: 100%;
+      }
+      .hero-btns {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* ==========================================================================
+       MODULES CONSOLE, OPERATOR AUTH, SEARCH HISTORY, WATCHLIST & ALERTS STYLES
+       ========================================================================== */
+    /* Header Operator Profile Badge */
+    .operator-profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      padding: 5px 12px 5px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .operator-profile-pill:hover {
+      border-color: var(--indigo);
+      transform: translateY(-1px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    .op-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+    }
+    .op-avatar.guest {
+      background: #64748b;
+      box-shadow: none;
+    }
+    .op-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .op-callsign {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .op-clearance {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--indigo);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .op-auth-btn {
+      background: var(--indigo-light);
+      color: var(--indigo);
+      border: 1px solid var(--indigo);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .op-auth-btn:hover {
+      background: var(--indigo);
+      color: #fff;
+    }
+
+    /* Search input wrap & clear button */
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input-wrap input {
+      padding-right: 32px;
+    }
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px;
+      display: none;
+    }
+    .search-clear-btn.active {
+      display: block;
+    }
+    .search-clear-btn:hover {
+      color: var(--high);
+    }
+
+    /* Quick Search History Chips Bar */
+    .search-history-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0 16px 0;
+      padding: 8px 14px;
+      background: var(--panel-glass);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      font-size: 12px;
+    }
+    .history-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--indigo);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .history-chips-container {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      flex-grow: 1;
+    }
+    .history-chip {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .history-chip:hover {
+      border-color: var(--indigo);
+      background: var(--indigo-light);
+      color: var(--indigo);
+      transform: translateY(-1px);
+    }
+    .history-manage-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      margin-left: auto;
+    }
+    .history-manage-btn:hover {
+      color: var(--indigo);
+      text-decoration: underline;
+    }
+
+    /* Table Top Controls & View Tabs */
+    .table-top-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px 0 14px 0;
+    }
+    .table-view-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .view-tab-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .view-tab-btn:hover {
+      color: var(--indigo);
+      border-color: var(--indigo);
+    }
+    .view-tab-btn.active {
+      background: var(--indigo);
+      color: #ffffff;
+      border-color: var(--indigo);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+    }
+    .active-operator-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+    .badge-mini {
+      background: var(--indigo-light);
+      color: var(--indigo);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Bookmark Button */
+    .bookmark-btn {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--text-dim);
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+    .bookmark-btn:hover {
+      border-color: #f59e0b;
+      color: #f59e0b;
+      transform: scale(1.1);
+    }
+    .bookmark-btn.active {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+      font-weight: 700;
+    }
+    [data-theme="dark"] .bookmark-btn.active {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+
+    /* Modules Console in #project */
+    .modules-console {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: var(--card-shadow);
+      margin-top: 28px;
+    }
+    .modules-nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .mod-nav-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 12px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      min-width: 155px;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+      text-align: left;
+    }
+    .mod-nav-btn:hover {
+      border-color: var(--indigo);
+      color: var(--indigo);
+      transform: translateY(-2px);
+    }
+    .mod-nav-btn.active {
+      background: linear-gradient(135deg, var(--indigo-light), var(--cyan-light));
+      border-color: var(--indigo);
+      color: var(--indigo);
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.15);
+    }
+    [data-theme="dark"] .mod-nav-btn.active {
+      background: rgba(79, 70, 229, 0.2);
+    }
+    .mod-icon {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+    .mod-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .mod-nav-btn.active .mod-title {
+      color: var(--indigo);
+    }
+    .mod-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .mod-content-panel {
+      display: none;
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mod-content-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Sub-panels & Grids */
+    .mod-card {
+      background: var(--input-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .mod-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--panel-border);
+      flex-wrap: wrap;
+    }
+    .mod-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Operator Auth Styles */
+    .operator-profile-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 20px;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 20px;
+    }
+    @media(max-width: 768px) {
+      .operator-profile-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+    .profile-avatar-large {
+      width: 70px;
+      height: 70px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 0 4px 18px rgba(79, 70, 229, 0.4);
+    }
+    .profile-info h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-role {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin: 3px 0 8px 0;
+    }
+    .profile-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .profile-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .profile-badge.clearance {
+      background: var(--indigo-light);
+      color: var(--indigo);
+      border: 1px solid var(--indigo);
+    }
+    .profile-badge.station {
+      background: var(--cyan-light);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+    .profile-badge.session {
+      background: var(--low-light);
+      color: var(--low);
+      border: 1px solid var(--low-border);
+    }
+
+    /* Capabilities Matrix */
+    .perms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .perm-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .perm-card.granted {
+      border-left: 3px solid var(--low);
+      color: var(--text-main);
+    }
+    .perm-card.denied {
+      border-left: 3px solid var(--high);
+      color: var(--text-dim);
+      opacity: 0.7;
+    }
+
+    /* Quick Demo Operator Switcher */
+    .quick-operator-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .quick-op-btn {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-op-btn:hover {
+      border-color: var(--indigo);
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow);
+    }
+    .quick-op-btn.active {
+      border-color: var(--indigo);
+      background: var(--indigo-light);
+    }
+    .quick-op-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+    .quick-op-role {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Sliders & Calibration Controls */
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .slider-value {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--indigo);
+      font-weight: 700;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--panel-border);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--indigo);
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(79, 70, 229, 0.5);
+    }
+
+    /* Threat Incident Feed */
+    .incident-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .incident-item {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-left: 4px solid var(--high);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .incident-item.warning {
+      border-left-color: var(--medium);
+    }
+    .incident-item.acknowledged {
+      border-left-color: var(--low);
+      opacity: 0.8;
+    }
+    .incident-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .incident-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .incident-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .incident-tag.critical { background: var(--high-light); color: var(--high); border: 1px solid var(--high-border); }
+    .incident-tag.warning { background: var(--medium-light); color: var(--medium); border: 1px solid var(--medium-border); }
+    .incident-tag.resolved { background: var(--low-light); color: var(--low); border: 1px solid var(--low-border); }
+    .incident-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .incident-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    .incident-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* Watchlist Cards */
+    .watchlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .watchlist-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .watchlist-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .watchlist-notes-input {
+      width: 100%;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--panel-border);
+      background: var(--input-bg);
+      color: var(--input-text);
+    }
+
+    /* Floating Toast Alerts */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: 380px;
+    }
+    .toast-item {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      pointer-events: auto;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .toast-item.info { border-left: 4px solid var(--indigo); }
+    .toast-item.success { border-left: 4px solid var(--low); }
+    .toast-item.warning { border-left: 4px solid var(--medium); }
+    .toast-item.critical { border-left: 4px solid var(--high); }
+    .toast-icon { font-size: 18px; }
+    .toast-content { flex-grow: 1; }
+    .toast-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .toast-msg {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .toast-close {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    @media(max-width: 600px) {
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .operator-profile-pill {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Telemetry Ticker -->
+  <div class="telemetry-ticker">
+    <div class="ticker-left">
+      <div class="ticker-item">SDR TUNER: <span>RTL2832U / R820T2</span></div>
+      <div class="ticker-item">BANDWIDTH: <span>24.0 – 1766.0 MHz</span></div>
+      <div class="ticker-item">DSP MODE: <span id="tickerDspMode">ADAPTIVE FFT (2048)</span></div>
+      <div class="ticker-item">OPERATOR: <span id="tickerOperator">RADAR-ALPHA [L3]</span></div>
+    </div>
+    <div class="ticker-clock" id="systemClock">UTC --:--:--</div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="#home" class="brand">
+      <div class="radar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a10 10 0 0 1 10 10"></path>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+          <line x1="12" y1="12" x2="19" y2="5"></line>
+        </svg>
+      </div>
+      <div class="brand-title">
+        SMART SCAN
+        <span class="sub">SPECTRUM INTELLIGENCE</span>
+      </div>
+    </a>
+
+    <nav>
+      <a href="#home" class="active">Overview</a>
+      <a href="#dashboard">Live Dashboard</a>
+      <a href="#project">System Modules</a>
+      <a href="#hardware">Architecture</a>
+      <a href="#swoc">SWOC Analysis</a>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Operator Auth Profile & Quick Switch / Login Pill -->
+      <div class="operator-profile-pill" id="headerAuthBadge" onclick="openAuthModal()" title="Operator Profile & Access Control (Click to Log In / Switch)">
+        <div class="op-avatar" id="headerAvatar">RA</div>
+        <div class="op-details">
+          <span class="op-callsign" id="headerCallsign">RADAR-ALPHA</span>
+          <span class="op-clearance" id="headerClearance">LEVEL 3 COMMAND</span>
+        </div>
+        <button class="op-auth-btn" id="headerAuthBtn" onclick="event.stopPropagation(); handleHeaderAuthClick()">Switch</button>
+      </div>
+
+      <!-- Theme Switcher Button -->
+      <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Light/Dark Mode">
+        <span id="themeIcon">🌙</span> <span id="themeLabel">Dark Mode</span>
+      </button>
+
+      <div class="live-badge">
+        <div class="pulse-dot"></div>
+        <span id="headerStatus">RECEIVER LINKED</span>
+      </div>
+      <button class="audio-toggle-btn" id="audioToggleBtn" onclick="toggleAudio()" title="Toggle RF Audio Feedback">
+        <span id="audioIcon">🔈</span> Audio SFX
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-glow-back"></div>
+    <div class="hero-content">
+      <div class="hero-tag-badge">
+        <span>⚡</span> MIL-SPEC ADAPTIVE RF SURVEILLANCE PROTOTYPE
+      </div>
+      <h1>
+        Smart Scan – <span class="gradient-text">Adaptive</span><br>
+        Spectrum Monitoring
+      </h1>
+      <p>
+        An autonomous signal reconnaissance framework that detects, classifies, and dynamically prioritizes unfamiliar radio frequency transmissions using real-time risk-based observation algorithms.
+      </p>
+      <div class="hero-btns">
+        <a href="#dashboard" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          Explore Live Dashboard
+        </a>
+        <button class="btn btn-secondary" onclick="addSignal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+          Inject RF Burst
+        </button>
+        <a href="#project" class="btn btn-secondary">System Specs →</a>
+      </div>
+
+      <!-- Quick Telemetry Strip -->
+      <div class="hero-telemetry-strip">
+        <div class="strip-stat">
+          <span class="strip-label">Tuned Bandwidth</span>
+          <span class="strip-val">400 – 2500 MHz</span>
+        </div>
+        <div class="strip-stat">
+          <span class="strip-label">Sampling Dwell</span>
+          <span class="strip-val">12.5 ms / Hop</span>
+        </div>
+        <div class="strip-stat">
+          <span class="strip-label">RF Sensitivity</span>
+          <span class="strip-val">-118 dBm MDS</span>
+        </div>
+        <div class="strip-stat">
+          <span class="strip-label">Triage Algorithm</span>
+          <span class="strip-val">Adaptive Risk V2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard">
+    <div class="section-header">
+      <div class="tag">MONITORING COMMAND CENTER</div>
+      <h2 class="section-title">Spectrum Surveillance Dashboard</h2>
+      <p class="section-desc">Real-time spectral energy distribution, continuous RF waterfall analysis, and priority threat classification queue.</p>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="cards">
+      <div class="card card-total">
+        <div class="card-head">
+          <h3>Total Transmissions</h3>
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+          </div>
+        </div>
+        <div class="value cyan" id="total">06</div>
+        <div class="card-meta"><span>● Active in Spectrum Pool</span></div>
+      </div>
+
+      <div class="card card-high">
+        <div class="card-head">
+          <h3>High Priority Alerts</h3>
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+        </div>
+        <div class="value high" id="high">02</div>
+        <div class="card-meta"><span>Requires Immediate Dwell</span></div>
+      </div>
+
+      <div class="card card-medium">
+        <div class="card-head">
+          <h3>Medium Priority</h3>
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+        </div>
+        <div class="value medium" id="medium">02</div>
+        <div class="card-meta"><span>Intermittent / Unverified</span></div>
+      </div>
+
+      <div class="card card-low">
+        <div class="card-head">
+          <h3>Low Priority</h3>
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+        </div>
+        <div class="value low" id="low">02</div>
+        <div class="card-meta"><span>Known / Whitelisted Carrier</span></div>
+      </div>
+    </div>
+
+    <!-- Main Live Visualization -->
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <div class="spectrum-title-wrap">
+          <h3>Real-Time FFT Spectrogram</h3>
+          <div class="spectrum-legend">
+            <div class="legend-item"><div class="legend-color" style="background:#4f46e5"></div> RF Amplitude Wave</div>
+            <div class="legend-item"><div class="legend-color" style="background:#e11d48"></div> Peak Detected</div>
+          </div>
+        </div>
+        <span class="status" id="status">
+          <span class="pulse-dot"></span> Demo Active
+        </span>
+      </div>
+
+      <!-- Canvas Wrap with Reticle & Grid -->
+      <div class="canvas-wrap">
+        <div class="canvas-hud" id="canvasHud">FREQ: 433.90 MHz | -42 dBm</div>
+        <canvas id="spectrum"></canvas>
+      </div>
+
+      <!-- Quick Preset Signal Injectors -->
+      <div class="quick-presets">
+        <span class="preset-label">⚡ INJECT PRESET TARGET:</span>
+        <button class="preset-chip" onclick="injectPreset('ISM-433')">ISM 433 MHz (Sensor)</button>
+        <button class="preset-chip" onclick="injectPreset('LoRa-868')">LoRa 868 MHz (Telemetry)</button>
+        <button class="preset-chip" onclick="injectPreset('ADSB-1090')">ADS-B 1090 MHz (Aviation)</button>
+        <button class="preset-chip" onclick="injectPreset('GPS-1575')">GPS L1 1575 MHz</button>
+        <button class="preset-chip critical" onclick="injectPreset('DRONE-2400')">Drone Link 2.4 GHz [CRITICAL]</button>
+      </div>
+
+      <!-- Controls Toolbar -->
+      <div class="toolbar">
+        <button class="btn btn-primary" onclick="toggleMonitoring()" id="toggle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+          Stop Monitoring
+        </button>
+        <button class="btn btn-secondary" onclick="addSignal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Simulate Signal
+        </button>
+        <button class="btn btn-secondary" onclick="exportCSV()" title="Export detected signals as CSV">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export CSV
+        </button>
+
+        <div class="toolbar-right">
+          <select id="filter" onchange="onFilterChange()">
+            <option value="All">All Priorities</option>
+            <option value="High">High Priority Only</option>
+            <option value="Medium">Medium Priority Only</option>
+            <option value="Low">Low Priority Only</option>
+          </select>
+          <div class="search-input-wrap">
+            <input id="search" placeholder="Search Frequency, ID or Band..." oninput="onSearchInput()">
+            <button class="search-clear-btn" id="searchClearBtn" onclick="clearSearchInput()" title="Clear search">✕</button>
+          </div>
+          <button class="btn btn-secondary history-btn" onclick="openSearchHistoryModal()" title="View Search Query History & Audit Trail">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Search History
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Search History Ribbon -->
+      <div class="search-history-bar" id="searchHistoryBar">
+        <span class="history-label">⚡ Recent Searches:</span>
+        <div class="history-chips-container" id="historyChipsContainer">
+          <!-- chips dynamically populated -->
+        </div>
+        <button class="history-manage-btn" onclick="openSearchHistoryModal()">View History Audit (<span id="historyCountBadge">5</span>) ➔</button>
+      </div>
+
+      <!-- Table View Switcher Tabs & Operator Status -->
+      <div class="table-top-controls">
+        <div class="table-view-tabs">
+          <button class="view-tab-btn active" id="tabViewAll" onclick="setTableView('all')">
+            <span>📡 All Detected Signals</span> (<span id="totalSignalsBadge">6</span>)
+          </button>
+          <button class="view-tab-btn" id="tabViewWatchlist" onclick="setTableView('watchlist')">
+            <span>⭐ Pinned Watchlist</span> (<span id="watchlistCountBadge">2</span>)
+          </button>
+          <button class="view-tab-btn" id="tabViewIncidents" onclick="setTableView('incidents')">
+            <span>🚨 Threat Incidents</span> (<span id="incidentsCountBadge">2</span>)
+          </button>
+        </div>
+
+        <div class="active-operator-indicator">
+          Active Operator: <strong id="tableOperatorName">RADAR-ALPHA</strong> · Clearance: <span class="badge-mini" id="tableOperatorLevel">L3</span>
+        </div>
+      </div>
+
+      <!-- Signal Observations Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:44px; text-align:center;">Pin</th>
+              <th>Signal ID</th>
+              <th>Frequency</th>
+              <th>Signal Strength (RSSI)</th>
+              <th>Bandwidth</th>
+              <th>Classification / Band</th>
+              <th>Priority Level</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="signalRows">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- About, System Modules & Innovation Section -->
+  <section id="project">
+    <div class="section-header">
+      <div class="tag">TACTICAL WORKBENCH & METHODOLOGY</div>
+      <h2 class="section-title">Smart Scan System Modules & Operational Workbench</h2>
+      <p class="section-desc">Mission-critical functional modules designed for tactical RF surveillance: operator authentication & access control, forensic search audit history, target watchlists, threat incident alarms, and real-time DSP hardware calibration.</p>
+    </div>
+
+    <!-- Algorithmic Innovation Cards -->
+    <div class="grid-two">
+      <div class="innovation-card">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          The Conventional Problem
+        </h3>
+        <p>
+          Conventional wideband scanning architectures cycle linearly across frequencies with static dwell times. When hundreds of channels operate simultaneously, high-threat intermittent signals (e.g. burst telemetry, frequency-hopping drones, frequency-agile jammers) are easily missed while valuable DSP cycles are wasted analyzing known commercial FM or TV carriers.
+        </p>
+      </div>
+
+      <div class="innovation-card">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Smart Scan Adaptive Triage
+        </h3>
+        <p>
+          Smart Scan implements a multi-tier triage algorithm. As transmissions are detected, the system calculates an anomaly score based on spectral variance, duty cycle, unknown carrier footprint, and RSSI burst profile. High-priority observations receive up to <strong>8x higher dwell frequency</strong>, ensuring zero-packet loss on suspicious transmissions.
+        </p>
+      </div>
+    </div>
+
+    <!-- Integrated System Modules Console -->
+    <div class="modules-console">
+      <!-- Navigation Tabs -->
+      <div class="modules-nav">
+        <button class="mod-nav-btn active" onclick="switchModuleTab('auth')" id="modTabBtn-auth">
+          <span class="mod-icon">🛡️</span>
+          <span class="mod-title">Operator Auth</span>
+          <span class="mod-sub">Log In / Log Out / RBAC</span>
+        </button>
+        <button class="mod-nav-btn" onclick="switchModuleTab('history')" id="modTabBtn-history">
+          <span class="mod-icon">🔍</span>
+          <span class="mod-title">Search History</span>
+          <span class="mod-sub">Query Audit Trail</span>
+        </button>
+        <button class="mod-nav-btn" onclick="switchModuleTab('watchlist')" id="modTabBtn-watchlist">
+          <span class="mod-icon">⭐</span>
+          <span class="mod-title">Target Watchlist</span>
+          <span class="mod-sub">Pinned Frequencies</span>
+        </button>
+        <button class="mod-nav-btn" onclick="switchModuleTab('threats')" id="modTabBtn-threats">
+          <span class="mod-icon">🚨</span>
+          <span class="mod-title">Threat Incidents</span>
+          <span class="mod-sub">Real-Time Alarms</span>
+        </button>
+        <button class="mod-nav-btn" onclick="switchModuleTab('dsp')" id="modTabBtn-dsp">
+          <span class="mod-icon">🎛️</span>
+          <span class="mod-title">SDR DSP Tuning</span>
+          <span class="mod-sub">Hardware Calibration</span>
+        </button>
+        <button class="mod-nav-btn" onclick="switchModuleTab('export')" id="modTabBtn-export">
+          <span class="mod-icon">📊</span>
+          <span class="mod-title">Mission Telemetry</span>
+          <span class="mod-sub">Audit Reports & Export</span>
+        </button>
+      </div>
+
+      <!-- Module 1: Operator Authentication & Access Control -->
+      <div class="mod-content-panel active" id="modPanel-auth">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>🛡️</span> Operator Authentication & Role-Based Access Control (RBAC)
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" onclick="openAuthModal()" style="padding:7px 14px; font-size:12.5px;">Switch Profile / Log In</button>
+            <button class="btn btn-secondary" id="modLogoutBtn" onclick="logout()" style="padding:7px 14px; font-size:12.5px; color:var(--high);">Log Out</button>
+          </div>
+        </div>
+
+        <!-- Active Operator Profile Card -->
+        <div class="operator-profile-card">
+          <div class="profile-avatar-large" id="modProfileAvatar">RA</div>
+          <div class="profile-info">
+            <h4>
+              <span id="modProfileName">Capt. Vikram Rao</span>
+              <span style="font-size:12px; font-weight:600; color:var(--low);">● ACTIVE SESSION</span>
+            </h4>
+            <div class="profile-role" id="modProfileRole">Lead Signals Analyst · Electronic Warfare Intelligence</div>
+            <div class="profile-badges">
+              <span class="profile-badge clearance" id="modProfileClearance">CLEARANCE: LEVEL 3 COMMAND</span>
+              <span class="profile-badge station" id="modProfileStation">STATION: SDR-ALPHA-NODE-01</span>
+              <span class="profile-badge session" id="modProfileToken">TOKEN: SEC-90412-OK</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button class="btn btn-primary" onclick="openAuthModal()" style="padding:9px 18px; font-size:13px;">Manage Session</button>
+            <button class="btn btn-secondary" onclick="logout()" style="padding:9px 18px; font-size:13px;">Log Out</button>
+          </div>
+        </div>
+
+        <!-- Clearance & Permissions Matrix -->
+        <div class="mod-card">
+          <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:6px;">Current Clearance Capabilities Matrix</h4>
+          <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">Operational privileges granted based on military/academic SDR surveillance safety protocols.</p>
+          <div class="perms-grid" id="permsGrid">
+            <!-- Dynamically populated based on clearance -->
+          </div>
+        </div>
+
+        <!-- 1-Click Quick Operator Switcher -->
+        <div class="mod-card">
+          <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:6px;">Quick Profile Switcher (Demo Accounts)</h4>
+          <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">Instant 1-click test login to evaluate role-based features without typing passwords.</p>
+          <div class="quick-operator-list">
+            <button class="quick-op-btn active" id="quickOp-RADAR-ALPHA" onclick="loginPreset('RADAR-ALPHA')">
+              <span class="quick-op-name">👑 RADAR-ALPHA (Capt. V. Rao)</span>
+              <span class="quick-op-role">Lead Analyst · Level 3 Command (Full Access)</span>
+            </button>
+            <button class="quick-op-btn" id="quickOp-SIGINT-BRAVO" onclick="loginPreset('SIGINT-BRAVO')">
+              <span class="quick-op-name">⚡ SIGINT-BRAVO (Lieut. A. Chen)</span>
+              <span class="quick-op-role">EW Specialist · Level 2 Analyst (Triage & Tagger)</span>
+            </button>
+            <button class="quick-op-btn" id="quickOp-OBSERVER-GUEST" onclick="loginPreset('OBSERVER-GUEST')">
+              <span class="quick-op-name">👁️ OBSERVER-GUEST (Academic Observer)</span>
+              <span class="quick-op-role">Observer · Level 1 Guest (Telemetry Read-Only)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 2: Search History & Query Audit Trail -->
+      <div class="mod-content-panel" id="modPanel-history">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>🔍</span> Spectrum Search History & Investigation Audit Trail
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" onclick="exportSearchHistory()" style="padding:7px 14px; font-size:12.5px;">Export Search Log (JSON)</button>
+            <button class="btn btn-secondary" onclick="clearSearchHistory()" style="padding:7px 14px; font-size:12.5px; color:var(--high);">Clear History</button>
+          </div>
+        </div>
+
+        <!-- Search History Telemetry Summary -->
+        <div class="hero-telemetry-strip" style="margin-top:0; margin-bottom:20px;">
+          <div class="strip-stat">
+            <span class="strip-label">Total Queries</span>
+            <span class="strip-val" id="statTotalQueries">05</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Unique Frequency Bands</span>
+            <span class="strip-val" id="statUniqueBands">04</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Avg Filter Dwell</span>
+            <span class="strip-val">1.2 ms</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Audit Engine</span>
+            <span class="strip-val">Compliant ISO-RF</span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Query String</th>
+                <th>Priority Filter</th>
+                <th>Execution Time</th>
+                <th>Signals Matched</th>
+                <th>Operator</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="modHistoryRows">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Module 3: Target Watchlist & Frequency Bookmarks -->
+      <div class="mod-content-panel" id="modPanel-watchlist">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>⭐</span> Target Frequency Watchlist & Carrier Bookmarks
+          </div>
+          <button class="btn btn-primary" onclick="openAddWatchlistModal()" style="padding:7px 14px; font-size:12.5px;">
+            + Pin Custom Frequency
+          </button>
+        </div>
+
+        <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;">
+          Pinned suspicious transmissions automatically receive priority algorithmic observation passes and continuous RSSI threshold monitoring.
+        </p>
+
+        <div class="watchlist-grid" id="modWatchlistGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Module 4: Threat Incident Alerts & Anomaly Center -->
+      <div class="mod-content-panel" id="modPanel-threats">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>🚨</span> Tactical Threat Incident Log & Real-Time Alerts
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" onclick="acknowledgeAllIncidents()" style="padding:7px 14px; font-size:12.5px;">Acknowledge All</button>
+            <button class="btn btn-secondary" onclick="simulateThreatBurst()" style="padding:7px 14px; font-size:12.5px; color:var(--high);">Simulate Rogue Threat</button>
+          </div>
+        </div>
+
+        <div class="incident-feed" id="modIncidentFeed">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Module 5: SDR Receiver Hardware Calibration & DSP Tuning -->
+      <div class="mod-content-panel" id="modPanel-dsp">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>🎛️</span> SDR Receiver Hardware Calibration & DSP Parameters
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" onclick="resetHardwareConfig()" style="padding:7px 14px; font-size:12.5px;">Reset Defaults</button>
+            <button class="btn btn-primary" onclick="saveHardwareConfig()" style="padding:7px 14px; font-size:12.5px;">Apply & Save Calibration</button>
+          </div>
+        </div>
+
+        <div class="grid-two">
+          <div class="mod-card">
+            <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:14px;">Spectral Estimation & FFT Window</h4>
+            
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>FFT Window Size (Resolution Bins)</span>
+                <span class="slider-value" id="displayFftSize">2048 Bins</span>
+              </div>
+              <select id="configFftSize" onchange="updateCalibrationDisplays()">
+                <option value="1024">1024 Bins (Low Latency / High Speed)</option>
+                <option value="2048" selected>2048 Bins (Balanced Operational Standard)</option>
+                <option value="4096">4096 Bins (High Definition Spectral Resolution)</option>
+              </select>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Adaptive Dwell Time</span>
+                <span class="slider-value" id="displayDwellTime">12.5 ms</span>
+              </div>
+              <input type="range" id="configDwellTime" min="5" max="50" step="2.5" value="12.5" oninput="updateCalibrationDisplays()">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Anomaly Peak Sensitivity</span>
+                <span class="slider-value" id="displaySensitivity">6 dB Threshold</span>
+              </div>
+              <input type="range" id="configSensitivity" min="2" max="18" step="1" value="6" oninput="updateCalibrationDisplays()">
+            </div>
+          </div>
+
+          <div class="mod-card">
+            <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:14px;">RF Front-End Gain & Noise Gate</h4>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Receiver Gain Mode</span>
+                <span class="slider-value" id="displayGainMode">AGC Mode (Auto)</span>
+              </div>
+              <select id="configGainMode" onchange="updateCalibrationDisplays()">
+                <option value="AGC" selected>AGC - Automatic Gain Control</option>
+                <option value="Manual">Manual Tuner Gain</option>
+              </select>
+            </div>
+
+            <div class="slider-row" id="manualGainWrap" style="opacity:0.5; pointer-events:none;">
+              <div class="slider-header">
+                <span>Manual LNA/Mixer Gain</span>
+                <span class="slider-value" id="displayManualGain">32.8 dB</span>
+              </div>
+              <input type="range" id="configManualGain" min="0" max="49.6" step="0.8" value="32.8" oninput="updateCalibrationDisplays()">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Squelch Floor Cutoff</span>
+                <span class="slider-value" id="displaySquelch">-95 dBm</span>
+              </div>
+              <input type="range" id="configSquelch" min="-110" max="-40" step="1" value="-95" oninput="updateCalibrationDisplays()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 6: Mission Telemetry & Audit Export -->
+      <div class="mod-content-panel" id="modPanel-export">
+        <div class="mod-card-header">
+          <div class="mod-card-title">
+            <span>📊</span> Surveillance Mission Telemetry & Audit Reports
+          </div>
+        </div>
+
+        <div class="hero-telemetry-strip" style="margin-top:0; margin-bottom:24px;">
+          <div class="strip-stat">
+            <span class="strip-label">Mission Elapsed Time</span>
+            <span class="strip-val" id="missionElapsedTime">00:00:00</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Total Bursts Analyzed</span>
+            <span class="strip-val" id="statBurstsAnalyzed">14</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Threats Quarantined</span>
+            <span class="strip-val" id="statThreatsQuarantined">02</span>
+          </div>
+          <div class="strip-stat">
+            <span class="strip-label">Data Integrity</span>
+            <span class="strip-val">SHA-256 Valid</span>
+          </div>
+        </div>
+
+        <div class="grid-two">
+          <div class="mod-card">
+            <h4 style="font-family:'Space Grotesk',sans-serif; font-size:16px; margin-bottom:8px;">Tactical Mission Intelligence Report</h4>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">Download a comprehensive mission summary dossier including active frequencies, operator actions, threat triage incidents, and SDR hardware parameters in clean text format.</p>
+            <button class="btn btn-primary" onclick="exportMissionReport()" style="width:100%;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Download Mission Report (TXT)
+            </button>
+          </div>
+
+          <div class="mod-card">
+            <h4 style="font-family:'Space Grotesk',sans-serif; font-size:16px; margin-bottom:8px;">Complete Forensic JSON State Dump</h4>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">Full machine-readable backup containing active signals, operator audit trails, query history, incident feed, and hardware calibration registers.</p>
+            <button class="btn btn-secondary" onclick="exportFullTelemetryJSON()" style="width:100%;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download Full JSON Telemetry
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hardware Architecture Section -->
+  <section id="hardware">
+    <div class="section-header">
+      <div class="tag">LABORATORY TESTBED</div>
+      <h2 class="section-title">Hardware Architecture</h2>
+      <p class="section-desc">Low-cost SDR prototyping stack integrating commercial-off-the-shelf RF components with software DSP pipeline.</p>
+    </div>
+
+    <div class="cards">
+      <div class="hardware-card">
+        <span class="hardware-badge">Node 01 · SDR Receiver</span>
+        <div class="hardware-title">RTL-SDR v4</div>
+        <p class="hardware-desc">Wideband software defined receiver featuring RTL2832U demodulator and R820T2 tuner with 0.5 PPM TCXO stability.</p>
+        <div class="hardware-spec-tag">
+          <span>Range: 500 kHz – 1.76 GHz</span>
+          <span class="active">● USB 2.0</span>
+        </div>
+      </div>
+
+      <div class="hardware-card">
+        <span class="hardware-badge">Node 02 · Transducer</span>
+        <div class="hardware-title">SMA Antenna</div>
+        <p class="hardware-desc">Calibrated telescopic omnidirectional dipole antenna configured for VHF/UHF observation bands (100MHz - 1GHz).</p>
+        <div class="hardware-spec-tag">
+          <span>Impedance: 50 Ω</span>
+          <span class="active">● Matched</span>
+        </div>
+      </div>
+
+      <div class="hardware-card">
+        <span class="hardware-badge">Node 03 · Mock Transmitter</span>
+        <div class="hardware-title">ESP32-S3 Module</div>
+        <p class="hardware-desc">Microcontroller-driven RF signal beacon emitting controlled FSK/ASK test frames to validate detection algorithms.</p>
+        <div class="hardware-spec-tag">
+          <span>Output: +10 dBm</span>
+          <span class="active">● Controlled</span>
+        </div>
+      </div>
+
+      <div class="hardware-card">
+        <span class="hardware-badge">Node 04 · Compute Host</span>
+        <div class="hardware-title">Edge DSP Workstation</div>
+        <p class="hardware-desc">Laptop workstation running high-speed FFT analysis, classification routines, WebSocket streams, and dashboard UI.</p>
+        <div class="hardware-spec-tag">
+          <span>Sampling: 2.4 MSPS</span>
+          <span class="active">● 64-bit OS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dataflow Pipeline Diagram -->
+    <div class="pipeline-bar">
+      <div class="pipeline-node">
+        <div class="node-num">1</div>
+        <div class="node-info">RF Antenna<small>EM Radiation Capture</small></div>
+      </div>
+      <div class="pipeline-arrow">➔</div>
+      <div class="pipeline-node">
+        <div class="node-num">2</div>
+        <div class="node-info">RTL-SDR Tuner<small>IQ Downconversion (8-bit ADC)</small></div>
+      </div>
+      <div class="pipeline-arrow">➔</div>
+      <div class="pipeline-node">
+        <div class="node-num">3</div>
+        <div class="node-info">Fast Fourier Transform<small>DSP Spectral Estimation</small></div>
+      </div>
+      <div class="pipeline-arrow">➔</div>
+      <div class="pipeline-node">
+        <div class="node-num">4</div>
+        <div class="node-info">Priority Classifier<small>Adaptive Heuristic Engine</small></div>
+      </div>
+      <div class="pipeline-arrow">➔</div>
+      <div class="pipeline-node">
+        <div class="node-num">5</div>
+        <div class="node-info">Surveillance UI<small>Operator Web Console</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SWOC Analysis Section -->
+  <section id="swoc">
+    <div class="section-header">
+      <div class="tag">STRATEGIC EVALUATION</div>
+      <h2 class="section-title">SWOC Project Analysis</h2>
+      <p class="section-desc">Comprehensive engineering evaluation of the Smart Scan framework across strengths, weaknesses, opportunities, and constraints.</p>
+    </div>
+
+    <div class="grid-two">
+      <div class="swoc-card swoc-s">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Strengths
+        </h3>
+        <ul>
+          <li><strong>Ultra Low-Cost Prototype:</strong> Realized using sub-$35 SDR hardware without requiring multi-thousand dollar spectrum analyzers.</li>
+          <li><strong>Field Portability:</strong> Self-contained setup runs entirely on laptop USB bus power for field sweeps.</li>
+          <li><strong>Adaptive Resource Scheduling:</strong> Dwell scheduling scales dynamically based on signal risk ratings.</li>
+          <li><strong>Open Modular Stack:</strong> Web standards (HTML5/Canvas/JS) enable zero-dependency cross-platform deployment.</li>
+        </ul>
+      </div>
+
+      <div class="swoc-card swoc-w">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          Weaknesses
+        </h3>
+        <ul>
+          <li><strong>ADC Bit Depth Limit:</strong> 8-bit dynamic range (~48 dB SNR ceiling) restricts sensitivity in heavy interference.</li>
+          <li><strong>Host Compute Overhead:</strong> Dense multi-carrier FFT puts significant load on general-purpose laptop CPUs.</li>
+          <li><strong>Single-Tuner Architecture:</strong> Sequential sweeping cannot instantaneously monitor disparate frequency bands simultaneously.</li>
+        </ul>
+      </div>
+
+      <div class="swoc-card swoc-o">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          Opportunities
+        </h3>
+        <ul>
+          <li><strong>TinyML Neural Modulation Classifier:</strong> Deploy 1D-CNN directly on edge for instantaneous LoRa / FSK / QPSK modulation identification.</li>
+          <li><strong>Distributed Sensor Mesh:</strong> Link multiple low-cost Raspberry Pi nodes to calculate signal TDoA (Time Difference of Arrival) geolocation.</li>
+          <li><strong>Unmanned Aerial Vehicle (UAV) Detection:</strong> Train signature models to identify proprietary drone control and video links.</li>
+        </ul>
+      </div>
+
+      <div class="swoc-card swoc-c">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+          Challenges
+        </h3>
+        <ul>
+          <li><strong>High False Alarm Rate in Urban RF:</strong> Distinguishing benign IoT bursts from hostile rogue emitters in congested 2.4 GHz bands.</li>
+          <li><strong>Antenna Matching across Wide Bandwidth:</strong> Maintaining uniform VSWR impedance across 500 MHz to 2 GHz without physical reconfiguration.</li>
+          <li><strong>Frequency Hopping Countermeasures:</strong> Capturing agile spread-spectrum signals that switch channels faster than the SDR dwell interval.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signal Telemetry Modal -->
+  <div class="modal-overlay" id="signalModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title" id="modalSignalId">RF-001 TELEMETRY</div>
+      <div class="modal-badge" id="modalBand">BAND: ISM 433 MHz</div>
+
+      <div class="modal-grid">
+        <div class="modal-stat">
+          <div class="modal-stat-label">Center Frequency</div>
+          <div class="modal-stat-val" id="modalFreq">433.90 MHz</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Signal Level (RSSI)</div>
+          <div class="modal-stat-val" id="modalStrength">-42 dBm</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Channel Bandwidth</div>
+          <div class="modal-stat-val" id="modalBw">125 kHz</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Estimated SNR</div>
+          <div class="modal-stat-val" id="modalSnr">+24.5 dB</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Modulation Guess</div>
+          <div class="modal-stat-val" id="modalMod">2-FSK / Chirp</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Risk Priority</div>
+          <div class="modal-stat-val" id="modalPriority">HIGH</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; align-items:center;">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-secondary" id="modalWatchlistBtn" onclick="toggleWatchlistFromModal()">☆ Pin to Watchlist</button>
+        <button class="btn btn-primary" id="modalLockBtn" onclick="lockSignalFrequency()">Lock Frequency</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Operator Authentication Modal -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-box" style="max-width:540px;">
+      <button class="modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="modal-title">Operator Access & Authentication</div>
+      <div class="modal-badge" id="authModalBadge">SECURITY PROTOCOL: TAC-SPEC 2026</div>
+
+      <!-- Quick Preset Buttons -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:8px; font-family:'JetBrains Mono',monospace;">
+          1-Click Preset Operator Sign-In:
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="loginPreset('RADAR-ALPHA')" style="padding:6px 12px; font-size:12px;">
+            👑 RADAR-ALPHA (L3)
+          </button>
+          <button class="btn btn-secondary" onclick="loginPreset('SIGINT-BRAVO')" style="padding:6px 12px; font-size:12px;">
+            ⚡ SIGINT-BRAVO (L2)
+          </button>
+          <button class="btn btn-secondary" onclick="loginPreset('OBSERVER-GUEST')" style="padding:6px 12px; font-size:12px;">
+            👁️ GUEST OBSERVER (L1)
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom Auth Form -->
+      <form onsubmit="handleCustomAuthSubmit(event)">
+        <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              OPERATOR CALLSIGN
+            </label>
+            <input type="text" id="authInputCallsign" placeholder="e.g. RADAR-ALPHA or ECHO-SIX" required style="width:100%;">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              OPERATOR FULL NAME
+            </label>
+            <input type="text" id="authInputName" placeholder="e.g. Capt. Vikram Rao" required style="width:100%;">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              CLEARANCE LEVEL
+            </label>
+            <select id="authSelectClearance" style="width:100%;">
+              <option value="Level 3 - Command">Level 3 - Command & Control (Full Admin)</option>
+              <option value="Level 2 - Analyst">Level 2 - Signal Analyst (Triage & Watchlist)</option>
+              <option value="Level 1 - Observer">Level 1 - Guest Observer (Read-Only)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              STATION PASSCODE
+            </label>
+            <input type="password" id="authInputPasscode" placeholder="Enter station security token..." value="••••••••" style="width:100%;">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:space-between; align-items:center;">
+          <button type="button" class="btn btn-secondary" onclick="logout(); closeAuthModal();" style="color:var(--high);">
+            Log Out Current Session
+          </button>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Sign In / Switch</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Search History Modal -->
+  <div class="modal-overlay" id="searchHistoryModal">
+    <div class="modal-box" style="max-width:720px;">
+      <button class="modal-close" onclick="closeSearchHistoryModal()">✕</button>
+      <div class="modal-title">Search Query Audit Trail</div>
+      <div class="modal-badge">FORENSIC SPECTRUM SEARCH LOG</div>
+
+      <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;">
+        All frequency queries, classification lookups, and triage priority filters performed by authenticated operators.
+      </p>
+
+      <div class="table-container" style="max-height:360px; margin-bottom:20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Query</th>
+              <th>Filter</th>
+              <th>Time (UTC)</th>
+              <th>Matches</th>
+              <th>Operator</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="modalSearchHistoryRows">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:space-between; align-items:center;">
+        <button class="btn btn-secondary" onclick="clearSearchHistory()" style="color:var(--high);">Clear Log</button>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-secondary" onclick="exportSearchHistory()">Export Log (JSON)</button>
+          <button class="btn btn-primary" onclick="closeSearchHistoryModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Custom Watchlist Modal -->
+  <div class="modal-overlay" id="addWatchlistModal">
+    <div class="modal-box" style="max-width:500px;">
+      <button class="modal-close" onclick="closeAddWatchlistModal()">✕</button>
+      <div class="modal-title">Pin Target Carrier to Watchlist</div>
+      <div class="modal-badge">CUSTOM FREQUENCY OBSERVATION</div>
+
+      <form onsubmit="handleAddWatchlistSubmit(event)">
+        <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              CENTER FREQUENCY (MHz)
+            </label>
+            <input type="number" step="0.01" id="watchInputFreq" placeholder="e.g. 433.92 or 2440.00" required style="width:100%;">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              BAND / CLASSIFICATION
+            </label>
+            <input type="text" id="watchInputBand" placeholder="e.g. ISM Sensor Burst or UAV Link" required style="width:100%;">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              THREAT PRIORITY LEVEL
+            </label>
+            <select id="watchSelectPriority" style="width:100%;">
+              <option value="High">High - Critical Threat Triage</option>
+              <option value="Medium" selected>Medium - Elevated Observation</option>
+              <option value="Low">Low - Routine Background Carrier</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+              ANALYST TACTICAL NOTES
+            </label>
+            <input type="text" id="watchInputNote" placeholder="e.g. Periodic chirp observed every 12 seconds." style="width:100%;">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddWatchlistModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Pin Target</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notifications Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-left">
+        <div class="footer-brand">◈ SMART SCAN SPECTRUM INTELLIGENCE</div>
+        <p class="footer-desc">
+          An adaptive software defined radio surveillance prototype developed as an engineering college micro-project (2026). Designed for autonomous spectrum observation and dynamic signal triage.
+        </p>
+      </div>
+      <div>
+        <a href="#home" class="back-to-top">↑ Back to Top</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>Prototype Simulation Console · Academic & Research Demonstration Platform</div>
+      <div>College Micro Project · Electronics & Communication Engineering · 2026</div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // System Theme Management (Light by default, versatile toggle)
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('smartscan_theme', theme);
+      const icon = document.getElementById("themeIcon");
+      const label = document.getElementById("themeLabel");
+      if (theme === 'dark') {
+        if (icon) icon.textContent = "☀️";
+        if (label) label.textContent = "Light Mode";
+      } else {
+        if (icon) icon.textContent = "🌙";
+        if (label) label.textContent = "Dark Mode";
+      }
+      drawSpectrum(); // re-render spectrum with appropriate palette
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      setTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    // Initialize saved theme or default to light
+    const savedTheme = localStorage.getItem('smartscan_theme') || 'light';
+    setTheme(savedTheme);
+
+    // System Clock
+    function updateClock() {
+      const now = new Date();
+      const utc = now.toUTCString().split(" ")[4] + " UTC";
+      const el = document.getElementById("systemClock");
+      if (el) el.textContent = utc + " | SYS NOMINAL";
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Data Structures & State Management
+    let signals = [
+      { id: "RF-001", freq: 433.90, strength: -42, bw: 125, priority: "High", band: "ISM 433 MHz", mod: "2-FSK", snr: 26 },
+      { id: "RF-002", freq: 868.20, strength: -65, bw: 200, priority: "Medium", band: "SRD Europe", mod: "LoRa CSS", snr: 18 },
+      { id: "RF-003", freq: 915.40, strength: -82, bw: 100, priority: "Low", band: "ISM 915 MHz", mod: "GFSK", snr: 9 },
+      { id: "RF-004", freq: 2400.50, strength: -38, bw: 500, priority: "High", band: "ISM 2.4 GHz (Drone)", mod: "FHSS / OFDM", snr: 31 },
+      { id: "RF-005", freq: 1575.42, strength: -70, bw: 150, priority: "Medium", band: "GPS L1 Carrier", mod: "BPSK (CDMA)", snr: 14 },
+      { id: "RF-006", freq: 1090.00, strength: -91, bw: 100, priority: "Low", band: "ADS-B Transponder", mod: "PPM Mode-S", snr: 6 }
+    ];
+
+    let active = true;
+    let counter = 7;
+    let audioEnabled = false;
+    let audioCtx = null;
+    let currentTableView = 'all'; // 'all' | 'watchlist' | 'incidents'
+    let inspectingSignalId = null;
+    let searchDebounceTimer = null;
+    let missionSeconds = 0;
+    let burstsAnalyzedCount = 14;
+
+    // Operator Authentication Profiles
+    const DEFAULT_OPERATORS = {
+      "RADAR-ALPHA": {
+        authenticated: true,
+        callsign: "RADAR-ALPHA",
+        name: "Capt. Vikram Rao",
+        role: "Lead Signals Analyst · Electronic Warfare Intelligence",
+        clearance: "Level 3 - Command",
+        station: "SDR-ALPHA-NODE-01",
+        sessionToken: "SEC-90412-OK",
+        loginTime: "10:00:00 UTC"
+      },
+      "SIGINT-BRAVO": {
+        authenticated: true,
+        callsign: "SIGINT-BRAVO",
+        name: "Lieut. Alex Chen",
+        role: "Electronic Warfare Tactical Specialist",
+        clearance: "Level 2 - Analyst",
+        station: "SDR-BRAVO-NODE-02",
+        sessionToken: "SEC-41882-OK",
+        loginTime: "10:15:20 UTC"
+      },
+      "OBSERVER-GUEST": {
+        authenticated: false,
+        callsign: "GUEST-OBSERVER",
+        name: "Academic Guest Observer",
+        role: "Observer · Read-Only Telemetry Viewer",
+        clearance: "Level 1 - Observer",
+        station: "REMOTE-GUEST-PORTAL",
+        sessionToken: "SEC-GUEST-READONLY",
+        loginTime: "10:30:00 UTC"
+      }
+    };
+
+    let currentUser = null;
+    try {
+      const savedUser = localStorage.getItem('smartscan_auth_user');
+      currentUser = savedUser ? JSON.parse(savedUser) : { ...DEFAULT_OPERATORS["RADAR-ALPHA"] };
+    } catch(e) {
+      currentUser = { ...DEFAULT_OPERATORS["RADAR-ALPHA"] };
+    }
+
+    // Search History Log
+    let searchHistory = [];
+    try {
+      const savedHistory = localStorage.getItem('smartscan_search_history');
+      searchHistory = savedHistory ? JSON.parse(savedHistory) : [
+        { id: "SH-01", query: "ISM 433 MHz", filter: "High", time: "10:14:20 UTC", hits: 2, operator: "RADAR-ALPHA" },
+        { id: "SH-02", query: "2400", filter: "High", time: "10:02:15 UTC", hits: 1, operator: "RADAR-ALPHA" },
+        { id: "SH-03", query: "Drone Link", filter: "High", time: "09:48:50 UTC", hits: 1, operator: "RADAR-ALPHA" },
+        { id: "SH-04", query: "LoRa CSS", filter: "Medium", time: "09:30:11 UTC", hits: 1, operator: "SIGINT-BRAVO" },
+        { id: "SH-05", query: "ADS-B", filter: "Low", time: "09:12:05 UTC", hits: 1, operator: "RADAR-ALPHA" }
+      ];
+    } catch(e) {
+      searchHistory = [];
+    }
+
+    // Target Watchlist (Pinned Frequencies)
+    let watchlist = [];
+    try {
+      const savedWatchlist = localStorage.getItem('smartscan_watchlist');
+      watchlist = savedWatchlist ? JSON.parse(savedWatchlist) : [
+        { id: "RF-001", freq: 433.90, band: "ISM 433 MHz", priority: "High", note: "Suspected clandestine IoT telemetry beacon. Monitor burst cycle.", pinnedAt: "10:15 UTC", rssi: -42 },
+        { id: "RF-004", freq: 2400.50, band: "ISM 2.4 GHz (Drone)", priority: "High", note: "Fast hopping C2 uplink beacon. High threat level.", pinnedAt: "09:50 UTC", rssi: -38 }
+      ];
+    } catch(e) {
+      watchlist = [];
+    }
+
+    // Threat Incident Feed
+    let threatIncidents = [];
+    try {
+      const savedIncidents = localStorage.getItem('smartscan_threat_incidents');
+      threatIncidents = savedIncidents ? JSON.parse(savedIncidents) : [
+        {
+          id: "INC-8821",
+          time: "10:18:40 UTC",
+          freq: 2400.50,
+          band: "ISM 2.4 GHz (Drone)",
+          threat: "CRITICAL",
+          title: "Agile Spread-Spectrum Carrier Spike",
+          desc: "High-amplitude frequency hopping carrier detected exceeding threshold by +18 dB.",
+          status: "Active",
+          acknowledged: false,
+          operator: "SYSTEM-TRIGGER"
+        },
+        {
+          id: "INC-8820",
+          time: "09:55:12 UTC",
+          freq: 433.90,
+          band: "ISM 433 MHz",
+          threat: "WARNING",
+          title: "Unregistered Continuous Carrier",
+          desc: "Continuous unassigned carrier at -42 dBm RSSI floor.",
+          status: "Investigating",
+          acknowledged: true,
+          operator: "RADAR-ALPHA"
+        }
+      ];
+    } catch(e) {
+      threatIncidents = [];
+    }
+
+    // SDR Receiver Hardware Calibration Config
+    let hardwareConfig = {
+      fftSize: 2048,
+      dwellTime: 12.5,
+      sensitivity: 6,
+      gainMode: "AGC",
+      manualGain: 32.8,
+      squelch: -95
+    };
+    try {
+      const savedConfig = localStorage.getItem('smartscan_hardware_config');
+      if (savedConfig) hardwareConfig = { ...hardwareConfig, ...JSON.parse(savedConfig) };
+    } catch(e) {}
+
+    // Mission Elapsed Timer
+    setInterval(() => {
+      missionSeconds++;
+      const hrs = String(Math.floor(missionSeconds / 3600)).padStart(2, "0");
+      const mins = String(Math.floor((missionSeconds % 3600) / 60)).padStart(2, "0");
+      const secs = String(missionSeconds % 60).padStart(2, "0");
+      const el = document.getElementById("missionElapsedTime");
+      if (el) el.textContent = `${hrs}:${mins}:${secs}`;
+    }, 1000);
+
+    // Floating Toast Notification Engine
+    function showToast(title, message, type = 'info', duration = 3200) {
+      const container = document.getElementById("toastContainer");
+      if (!container) return;
+
+      const toast = document.createElement("div");
+      toast.className = `toast-item ${type}`;
+
+      const iconMap = {
+        info: 'ℹ️',
+        success: '✅',
+        warning: '⚠️',
+        critical: '🚨'
+      };
+
+      toast.innerHTML = `
+        <div class="toast-icon">${iconMap[type] || '🔔'}</div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-msg">${message}</div>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(12px) scale(0.9)';
+        setTimeout(() => toast.remove(), 250);
+      }, duration);
+    }
+
+    // Web Audio Synthesizer (Avionics & RF feedback)
+    function playBeep(freq = 880, type = 'sine', duration = 0.08) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn("Audio not initialized:", e);
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById("audioToggleBtn");
+      const icon = document.getElementById("audioIcon");
+      if (audioEnabled) {
+        btn.classList.add("active");
+        icon.textContent = "🔊";
+        playBeep(1200, 'sine', 0.1);
+        showToast("Audio SFX Active", "Tactical RF synthesizer feedback enabled.", "info");
+      } else {
+        btn.classList.remove("active");
+        icon.textContent = "🔈";
+        showToast("Audio Muted", "RF synthesizer feedback silenced.", "info");
+      }
+    }
+
+    // =========================================================================
+    // MODULE 1: OPERATOR AUTHENTICATION & ACCESS CONTROL (LOG IN / LOG OUT / RBAC)
+    // =========================================================================
+    function openAuthModal() {
+      const modal = document.getElementById("authModal");
+      if (modal) {
+        document.getElementById("authInputCallsign").value = currentUser.callsign;
+        document.getElementById("authInputName").value = currentUser.name;
+        document.getElementById("authSelectClearance").value = currentUser.clearance;
+        modal.classList.add("active");
+      }
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function handleHeaderAuthClick() {
+      openAuthModal();
+    }
+
+    function loginPreset(presetKey) {
+      if (!DEFAULT_OPERATORS[presetKey]) return;
+      currentUser = { ...DEFAULT_OPERATORS[presetKey] };
+      currentUser.sessionToken = "SEC-" + Math.random().toString(36).substr(2, 6).toUpperCase() + "-OK";
+      currentUser.loginTime = new Date().toUTCString().split(" ")[4] + " UTC";
+      localStorage.setItem('smartscan_auth_user', JSON.stringify(currentUser));
+      updateAuthUI();
+      closeAuthModal();
+      showToast("Identity Verified", `Operator logged in as ${currentUser.callsign} (${currentUser.clearance}).`, "success");
+      playBeep(1200, 'sine', 0.12);
+    }
+
+    function handleCustomAuthSubmit(e) {
+      e.preventDefault();
+      const callsign = (document.getElementById("authInputCallsign").value || "ANALYST-CUSTOM").trim().toUpperCase();
+      const name = (document.getElementById("authInputName").value || "Field Operator").trim();
+      const clearance = document.getElementById("authSelectClearance").value;
+
+      currentUser = {
+        authenticated: true,
+        callsign: callsign,
+        name: name,
+        role: clearance.includes("Level 3") ? "Command & Control Supervisor" : clearance.includes("Level 2") ? "Signal Intelligence Analyst" : "Guest Observer",
+        clearance: clearance,
+        station: "SDR-ALPHA-NODE-01",
+        sessionToken: "SEC-" + Math.random().toString(36).substr(2, 6).toUpperCase() + "-OK",
+        loginTime: new Date().toUTCString().split(" ")[4] + " UTC"
+      };
+
+      localStorage.setItem('smartscan_auth_user', JSON.stringify(currentUser));
+      updateAuthUI();
+      closeAuthModal();
+      showToast("Access Granted", `Welcome Operator ${currentUser.callsign} (${clearance}).`, "success");
+      playBeep(1400, 'sine', 0.15);
+    }
+
+    function logout() {
+      currentUser = { ...DEFAULT_OPERATORS["OBSERVER-GUEST"] };
+      currentUser.sessionToken = "SEC-GUEST-REVOKED";
+      currentUser.loginTime = new Date().toUTCString().split(" ")[4] + " UTC";
+      localStorage.setItem('smartscan_auth_user', JSON.stringify(currentUser));
+      updateAuthUI();
+      showToast("Operator Logged Out", "Session terminated. Switched to Guest Observer (Read-Only).", "info");
+      playBeep(440, 'triangle', 0.15);
+    }
+
+    function updateAuthUI() {
+      const isL3 = currentUser.clearance.includes("Level 3");
+      const isL2 = currentUser.clearance.includes("Level 2");
+      const lvlStr = isL3 ? "L3" : isL2 ? "L2" : "L1";
+
+      // Header Pill
+      const avatarEl = document.getElementById("headerAvatar");
+      const callsignEl = document.getElementById("headerCallsign");
+      const clearanceEl = document.getElementById("headerClearance");
+      const authBtnEl = document.getElementById("headerAuthBtn");
+
+      if (avatarEl) {
+        avatarEl.textContent = currentUser.callsign.substring(0, 2);
+        if (currentUser.authenticated) avatarEl.classList.remove("guest");
+        else avatarEl.classList.add("guest");
+      }
+      if (callsignEl) callsignEl.textContent = currentUser.callsign;
+      if (clearanceEl) clearanceEl.textContent = currentUser.clearance.toUpperCase();
+      if (authBtnEl) authBtnEl.textContent = currentUser.authenticated ? "Switch" : "Log In";
+
+      // Ticker & Table Operator
+      const tickerOp = document.getElementById("tickerOperator");
+      if (tickerOp) tickerOp.textContent = `${currentUser.callsign} [${lvlStr}]`;
+
+      const tblOp = document.getElementById("tableOperatorName");
+      const tblLvl = document.getElementById("tableOperatorLevel");
+      if (tblOp) tblOp.textContent = currentUser.callsign;
+      if (tblLvl) tblLvl.textContent = lvlStr;
+
+      // Module 1 Profile Card in #project
+      const pAvatar = document.getElementById("modProfileAvatar");
+      const pName = document.getElementById("modProfileName");
+      const pRole = document.getElementById("modProfileRole");
+      const pClearance = document.getElementById("modProfileClearance");
+      const pStation = document.getElementById("modProfileStation");
+      const pToken = document.getElementById("modProfileToken");
+
+      if (pAvatar) pAvatar.textContent = currentUser.callsign.substring(0, 2);
+      if (pName) pName.textContent = currentUser.name;
+      if (pRole) pRole.textContent = currentUser.role;
+      if (pClearance) pClearance.textContent = `CLEARANCE: ${currentUser.clearance.toUpperCase()}`;
+      if (pStation) pStation.textContent = `STATION: ${currentUser.station}`;
+      if (pToken) pToken.textContent = `TOKEN: ${currentUser.sessionToken}`;
+
+      // Highlight active quick profile button
+      ["RADAR-ALPHA", "SIGINT-BRAVO", "OBSERVER-GUEST"].forEach(k => {
+        const btn = document.getElementById(`quickOp-${k}`);
+        if (btn) {
+          if (currentUser.callsign === k || (k === "OBSERVER-GUEST" && !currentUser.authenticated)) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        }
+      });
+
+      // Render Capabilities Matrix
+      const permsGrid = document.getElementById("permsGrid");
+      if (permsGrid) {
+        const perms = [
+          { name: "Live Spectrum Surveillance", granted: true },
+          { name: "Forensic Search Query Log", granted: true },
+          { name: "Target Watchlist Pinning", granted: isL3 || isL2 },
+          { name: "Threat Incident Acknowledgment", granted: isL3 || isL2 },
+          { name: "Frequency Triage Locking", granted: isL3 || isL2 },
+          { name: "RF Burst Signal Simulation", granted: isL3 },
+          { name: "DSP Hardware Calibration & Gain", granted: isL3 },
+          { name: "Audit Trail & History Purging", granted: isL3 }
+        ];
+
+        permsGrid.innerHTML = perms.map(p => `
+          <div class="perm-card ${p.granted ? 'granted' : 'denied'}">
+            <span style="font-size:16px;">${p.granted ? '✅' : '🔒'}</span>
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700;">${p.name}</div>
+              <small style="color:${p.granted ? 'var(--low)' : 'var(--high)'}; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+                ${p.granted ? 'AUTHORIZATION GRANTED' : 'RESTRICTED / HIGHER LEVEL REQUIRED'}
+              </small>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    // =========================================================================
+    // MODULE 2: SEARCH HISTORY & INVESTIGATION AUDIT TRAIL
+    // =========================================================================
+    function openSearchHistoryModal() {
+      renderSearchHistory();
+      const modal = document.getElementById("searchHistoryModal");
+      if (modal) modal.classList.add("active");
+    }
+
+    function closeSearchHistoryModal() {
+      const modal = document.getElementById("searchHistoryModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function onSearchInput() {
+      const searchVal = document.getElementById("search").value;
+      const clearBtn = document.getElementById("searchClearBtn");
+      if (clearBtn) {
+        if (searchVal.length > 0) clearBtn.classList.add("active");
+        else clearBtn.classList.remove("active");
+      }
+
+      renderSignals();
+
+      clearTimeout(searchDebounceTimer);
+      if (searchVal.trim().length >= 2) {
+        searchDebounceTimer = setTimeout(() => {
+          recordSearch(searchVal.trim(), document.getElementById("filter").value);
+        }, 500);
+      }
+    }
+
+    function clearSearchInput() {
+      const searchInput = document.getElementById("search");
+      if (searchInput) searchInput.value = "";
+      const clearBtn = document.getElementById("searchClearBtn");
+      if (clearBtn) clearBtn.classList.remove("active");
+      renderSignals();
+    }
+
+    function onFilterChange() {
+      const filter = document.getElementById("filter").value;
+      const search = document.getElementById("search").value.trim();
+      renderSignals();
+      if (filter !== "All" || search.length > 0) {
+        recordSearch(search || `Priority: ${filter}`, filter);
+      }
+    }
+
+    function recordSearch(query, filter = "All") {
+      if (!query || query.trim() === "") return;
+      query = query.trim();
+
+      // Avoid immediate duplicate
+      if (searchHistory.length > 0 && searchHistory[0].query.toLowerCase() === query.toLowerCase() && searchHistory[0].filter === filter) {
+        return;
+      }
+
+      // Calculate matches
+      const matches = signals.filter(s => {
+        const matchesFilter = (filter === "All" || s.priority === filter);
+        const matchesQuery = s.freq.toString().includes(query.toLowerCase()) ||
+          s.id.toLowerCase().includes(query.toLowerCase()) ||
+          (s.band && s.band.toLowerCase().includes(query.toLowerCase())) ||
+          (s.priority && s.priority.toLowerCase().includes(query.toLowerCase()));
+        return matchesFilter && matchesQuery;
+      }).length;
+
+      const now = new Date();
+      const timeStr = now.toUTCString().split(" ")[4] + " UTC";
+
+      const entry = {
+        id: "SH-" + String(searchHistory.length + 1).padStart(2, "0"),
+        query: query,
+        filter: filter,
+        time: timeStr,
+        hits: matches,
+        operator: currentUser.callsign
+      };
+
+      searchHistory.unshift(entry);
+      if (searchHistory.length > 25) searchHistory.pop();
+      localStorage.setItem('smartscan_search_history', JSON.stringify(searchHistory));
+
+      renderSearchHistory();
+    }
+
+    function applySearchQuery(query, filter = "All") {
+      const searchInput = document.getElementById("search");
+      const filterSelect = document.getElementById("filter");
+
+      if (searchInput) {
+        searchInput.value = query.startsWith("Priority:") ? "" : query;
+        const clearBtn = document.getElementById("searchClearBtn");
+        if (clearBtn && searchInput.value.length > 0) clearBtn.classList.add("active");
+      }
+      if (filterSelect && filter) {
+        filterSelect.value = filter;
+      }
+
+      setTableView('all');
+      closeSearchHistoryModal();
+      renderSignals();
+
+      const dashboardEl = document.getElementById("dashboard");
+      if (dashboardEl) dashboardEl.scrollIntoView({ behavior: 'smooth' });
+
+      showToast("Search Filter Applied", `Tuned query: "${query}" (${filter}).`, "info");
+      playBeep(920, 'sine', 0.08);
+    }
+
+    function clearSearchHistory() {
+      if (!currentUser.authenticated || currentUser.clearance.includes("Level 1")) {
+        showToast("Access Denied", "Level 2+ clearance required to clear forensic search audit log.", "warning");
+        return;
+      }
+      searchHistory = [];
+      localStorage.setItem('smartscan_search_history', JSON.stringify(searchHistory));
+      renderSearchHistory();
+      showToast("Audit Trail Cleared", "Search history records permanently purged.", "info");
+      playBeep(500, 'triangle', 0.1);
+    }
+
+    function exportSearchHistory() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(searchHistory, null, 2));
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `smartscan_search_audit_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Export Ready", "Search history audit trail downloaded as JSON.", "success");
+    }
+
+    function renderSearchHistory() {
+      // 1. Dashboard quick chips
+      const chipsContainer = document.getElementById("historyChipsContainer");
+      if (chipsContainer) {
+        if (searchHistory.length === 0) {
+          chipsContainer.innerHTML = `<span style="color:var(--text-dim); font-size:11px;">No searches logged yet.</span>`;
+        } else {
+          chipsContainer.innerHTML = searchHistory.slice(0, 5).map(item => `
+            <button class="history-chip" onclick="applySearchQuery('${item.query}', '${item.filter}')" title="Filter: ${item.filter} | Matches: ${item.hits}">
+              <span>${item.query}</span>
+              <small style="color:var(--text-dim); font-size:10px;">(${item.hits})</small>
+            </button>
+          `).join("");
+        }
+      }
+
+      const badge = document.getElementById("historyCountBadge");
+      if (badge) badge.textContent = searchHistory.length;
+
+      const statTotal = document.getElementById("statTotalQueries");
+      if (statTotal) statTotal.textContent = String(searchHistory.length).padStart(2, "0");
+
+      const statBands = document.getElementById("statUniqueBands");
+      if (statBands) {
+        const unique = new Set(searchHistory.map(s => s.query)).size;
+        statBands.textContent = String(unique).padStart(2, "0");
+      }
+
+      // 2. Module 2 Table in #project
+      const modRows = document.getElementById("modHistoryRows");
+      if (modRows) {
+        if (searchHistory.length === 0) {
+          modRows.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-dim);">No search operations recorded in current session.</td></tr>`;
+        } else {
+          modRows.innerHTML = searchHistory.map(item => `
+            <tr>
+              <td><strong style="color:var(--text-main); font-family:'JetBrains Mono',monospace;">${item.query}</strong></td>
+              <td><span class="badge-mini">${item.filter}</span></td>
+              <td style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim);">${item.time}</td>
+              <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${item.hits} Hits</td>
+              <td><span class="badge-mini" style="background:var(--cyan-light); color:var(--cyan);">${item.operator}</span></td>
+              <td>
+                <button class="inspect-btn" onclick="applySearchQuery('${item.query}', '${item.filter}')">Re-run</button>
+              </td>
+            </tr>
+          `).join("");
+        }
+      }
+
+      // 3. Modal Table
+      const modalRows = document.getElementById("modalSearchHistoryRows");
+      if (modalRows) {
+        if (searchHistory.length === 0) {
+          modalRows.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-dim);">No search operations recorded.</td></tr>`;
+        } else {
+          modalRows.innerHTML = searchHistory.map(item => `
+            <tr>
+              <td><strong style="color:var(--text-main); font-family:'JetBrains Mono',monospace;">${item.query}</strong></td>
+              <td><span class="badge-mini">${item.filter}</span></td>
+              <td style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim);">${item.time}</td>
+              <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${item.hits}</td>
+              <td><span class="badge-mini" style="background:var(--cyan-light); color:var(--cyan);">${item.operator}</span></td>
+              <td>
+                <button class="inspect-btn" onclick="applySearchQuery('${item.query}', '${item.filter}')">Re-run</button>
+              </td>
+            </tr>
+          `).join("");
+        }
+      }
+    }
+
+    // =========================================================================
+    // MODULE 3: TARGET WATCHLIST & CARRIER BOOKMARKS
+    // =========================================================================
+    function isSignalBookmarked(id) {
+      return watchlist.some(w => w.id === id);
+    }
+
+    function toggleWatchlist(id, defaultNote = "") {
+      if (!currentUser.authenticated || currentUser.clearance.includes("Level 1")) {
+        showToast("Clearance Insufficient", "Level 2+ clearance required to manage target watchlists.", "warning");
+        return;
+      }
+
+      const existingIndex = watchlist.findIndex(w => w.id === id);
+      if (existingIndex >= 0) {
+        watchlist.splice(existingIndex, 1);
+        showToast("Target Unpinned", `Carrier ${id} removed from priority watchlist.`, "info");
+        playBeep(600, 'sine', 0.08);
+      } else {
+        const sig = signals.find(s => s.id === id);
+        const freq = sig ? sig.freq : 0;
+        const band = sig ? sig.band : "Unknown Band";
+        const priority = sig ? sig.priority : "Medium";
+        const rssi = sig ? sig.strength : -70;
+
+        watchlist.unshift({
+          id: id,
+          freq: freq,
+          band: band,
+          priority: priority,
+          rssi: rssi,
+          note: defaultNote || "Operator flagged carrier for priority tracking.",
+          pinnedAt: new Date().toUTCString().split(" ")[4] + " UTC"
+        });
+        showToast("Target Pinned", `Carrier ${id} added to priority surveillance watchlist.`, "success");
+        playBeep(1300, 'sine', 0.12);
+      }
+
+      localStorage.setItem('smartscan_watchlist', JSON.stringify(watchlist));
+      renderSignals();
+      renderWatchlist();
+      updateModalWatchlistBtn(id);
+    }
+
+    function toggleWatchlistFromModal() {
+      if (inspectingSignalId) {
+        toggleWatchlist(inspectingSignalId);
+      }
+    }
+
+    function updateModalWatchlistBtn(id) {
+      const btn = document.getElementById("modalWatchlistBtn");
+      if (!btn) return;
+      if (isSignalBookmarked(id)) {
+        btn.textContent = "★ Pinned to Watchlist";
+        btn.classList.add("active");
+      } else {
+        btn.textContent = "☆ Pin to Watchlist";
+        btn.classList.remove("active");
+      }
+    }
+
+    function openAddWatchlistModal() {
+      const modal = document.getElementById("addWatchlistModal");
+      if (modal) modal.classList.add("active");
+    }
+
+    function closeAddWatchlistModal() {
+      const modal = document.getElementById("addWatchlistModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function handleAddWatchlistSubmit(e) {
+      e.preventDefault();
+      const freq = parseFloat(document.getElementById("watchInputFreq").value) || 433.92;
+      const band = document.getElementById("watchInputBand").value.trim() || "Custom RF Allocation";
+      const priority = document.getElementById("watchSelectPriority").value;
+      const note = document.getElementById("watchInputNote").value.trim() || "Operator manual carrier entry.";
+
+      const customId = "WATCH-" + String(watchlist.length + 1).padStart(2, "0");
+
+      watchlist.unshift({
+        id: customId,
+        freq: freq,
+        band: band,
+        priority: priority,
+        rssi: -55,
+        note: note,
+        pinnedAt: new Date().toUTCString().split(" ")[4] + " UTC"
+      });
+
+      localStorage.setItem('smartscan_watchlist', JSON.stringify(watchlist));
+      closeAddWatchlistModal();
+      renderWatchlist();
+      renderSignals();
+      showToast("Custom Frequency Pinned", `${freq.toFixed(2)} MHz registered in watchlist.`, "success");
+      playBeep(1250, 'sine', 0.12);
+    }
+
+    function removeWatchlist(id) {
+      watchlist = watchlist.filter(w => w.id !== id);
+      localStorage.setItem('smartscan_watchlist', JSON.stringify(watchlist));
+      renderWatchlist();
+      renderSignals();
+      showToast("Watchlist Updated", `Carrier ${id} removed.`, "info");
+    }
+
+    function saveWatchlistNote(id, noteText) {
+      const item = watchlist.find(w => w.id === id);
+      if (item) {
+        item.note = noteText;
+        localStorage.setItem('smartscan_watchlist', JSON.stringify(watchlist));
+        showToast("Note Saved", `Tactical note updated for ${id}.`, "info", 1800);
+      }
+    }
+
+    function tuneToWatchlistFreq(freq) {
+      applySearchQuery(freq.toFixed(2), "All");
+    }
+
+    function renderWatchlist() {
+      const badge = document.getElementById("watchlistCountBadge");
+      if (badge) badge.textContent = watchlist.length;
+
+      const container = document.getElementById("modWatchlistGrid");
+      if (!container) return;
+
+      if (watchlist.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding:36px; background:var(--panel); border:1px dashed var(--panel-border); border-radius:14px; color:var(--text-dim);">
+            No target carriers bookmarked. Pin signals from the Live Dashboard table or use the '+ Pin Custom Frequency' button above.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = watchlist.map(item => `
+        <div class="watchlist-card">
+          <div class="watchlist-card-head">
+            <span class="signal-id-badge">${item.id}</span>
+            <span class="priority-pill ${item.priority.toLowerCase()}">${item.priority}</span>
+          </div>
+
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--text-main);">
+            ${item.freq.toFixed(2)} MHz
+          </div>
+
+          <div style="font-size:12.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">
+            Band: <strong>${item.band}</strong> · Pinned: ${item.pinnedAt}
+          </div>
+
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:4px; font-family:'JetBrains Mono',monospace;">
+              Operator Notes:
+            </label>
+            <input class="watchlist-notes-input" value="${item.note || ''}" placeholder="Add tactical notes..." onchange="saveWatchlistNote('${item.id}', this.value)">
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:6px;">
+            <button class="btn btn-secondary" style="flex:1; padding:7px 10px; font-size:12px;" onclick="tuneToWatchlistFreq(${item.freq})">
+              Tune SDR Now
+            </button>
+            <button class="btn btn-secondary" style="padding:7px 10px; font-size:12px; color:var(--high);" onclick="removeWatchlist('${item.id}')">
+              Remove
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // =========================================================================
+    // MODULE 4: TACTICAL THREAT INCIDENT ALERTS & ANOMALY CENTER
+    // =========================================================================
+    function recordIncident(freq, band, threat = "CRITICAL", title = "RF Anomaly Detected", desc = "Burst carrier exceeded dynamic threshold.") {
+      const now = new Date();
+      const timeStr = now.toUTCString().split(" ")[4] + " UTC";
+      const newInc = {
+        id: "INC-" + Math.floor(1000 + Math.random() * 9000),
+        time: timeStr,
+        freq: freq,
+        band: band,
+        threat: threat,
+        title: title,
+        desc: desc,
+        status: "Active",
+        acknowledged: false,
+        operator: currentUser.callsign
+      };
+
+      threatIncidents.unshift(newInc);
+      if (threatIncidents.length > 20) threatIncidents.pop();
+      localStorage.setItem('smartscan_threat_incidents', JSON.stringify(threatIncidents));
+
+      renderThreatIncidents();
+
+      // Trigger siren sound and critical toast
+      if (threat === "CRITICAL") {
+        playBeep(1600, 'sawtooth', 0.22);
+        showToast(`🚨 THREAT INCIDENT: ${title}`, `${desc} (${freq.toFixed(2)} MHz)`, "critical", 5000);
+      } else {
+        playBeep(980, 'sine', 0.12);
+        showToast(`⚠️ WARNING: ${title}`, desc, "warning", 3500);
+      }
+    }
+
+    function acknowledgeIncident(id) {
+      if (!currentUser.authenticated || currentUser.clearance.includes("Level 1")) {
+        showToast("Clearance Insufficient", "Level 2+ clearance required to acknowledge threat alarms.", "warning");
+        return;
+      }
+
+      const item = threatIncidents.find(inc => inc.id === id);
+      if (item) {
+        item.acknowledged = true;
+        item.status = `Verified (${currentUser.callsign})`;
+        localStorage.setItem('smartscan_threat_incidents', JSON.stringify(threatIncidents));
+        renderThreatIncidents();
+        showToast("Threat Acknowledged", `Incident ${id} verified and silenced.`, "info");
+        playBeep(880, 'sine', 0.08);
+      }
+    }
+
+    function acknowledgeAllIncidents() {
+      if (!currentUser.authenticated || currentUser.clearance.includes("Level 1")) {
+        showToast("Clearance Insufficient", "Level 2+ clearance required to acknowledge threat alarms.", "warning");
+        return;
+      }
+
+      threatIncidents.forEach(item => {
+        item.acknowledged = true;
+        item.status = `Verified (${currentUser.callsign})`;
+      });
+      localStorage.setItem('smartscan_threat_incidents', JSON.stringify(threatIncidents));
+      renderThreatIncidents();
+      showToast("All Alarms Acknowledged", "All tactical threat incidents verified.", "success");
+    }
+
+    function simulateThreatBurst() {
+      if (!currentUser.authenticated || !currentUser.clearance.includes("Level 3")) {
+        showToast("Command Clearance Required", "Level 3 Command authorization needed for RF threat simulation.", "warning");
+        return;
+      }
+
+      const targets = [
+        { freq: 2437.00, band: "Drone C2 Link", title: "Rogue Drone Uplink Detected", desc: "Encrypted FHSS modulation detected inside restricted airspace corridor." },
+        { freq: 940.50, band: "Rogue Jamming Emitter", title: "Hostile Jamming Carrier", desc: "Wideband chirp jamming pulse targeting civil communication channels." },
+        { freq: 1575.42, band: "GPS Spoofer Burst", title: "GNSS Satellite Deception", desc: "Anomalous carrier power offset in GPS L1 spectrum indicates spoofing." }
+      ];
+
+      const t = targets[Math.floor(Math.random() * targets.length)];
+      injectPreset('DRONE-2400');
+      recordIncident(t.freq, t.band, "CRITICAL", t.title, t.desc);
+    }
+
+    function renderThreatIncidents() {
+      const badge = document.getElementById("incidentsCountBadge");
+      const activeCount = threatIncidents.filter(i => !i.acknowledged).length;
+      if (badge) badge.textContent = activeCount;
+
+      const statThreats = document.getElementById("statThreatsQuarantined");
+      if (statThreats) statThreats.textContent = String(threatIncidents.length).padStart(2, "0");
+
+      const feed = document.getElementById("modIncidentFeed");
+      if (!feed) return;
+
+      if (threatIncidents.length === 0) {
+        feed.innerHTML = `
+          <div style="text-align:center; padding:36px; background:var(--panel); border:1px dashed var(--panel-border); border-radius:14px; color:var(--text-dim);">
+            No active threat incidents recorded. Spectrum operational status is nominal.
+          </div>
+        `;
+        return;
+      }
+
+      feed.innerHTML = threatIncidents.map(inc => {
+        const itemClass = inc.acknowledged ? 'incident-item acknowledged' : (inc.threat === 'CRITICAL' ? 'incident-item' : 'incident-item warning');
+        const tagClass = inc.acknowledged ? 'incident-tag resolved' : (inc.threat === 'CRITICAL' ? 'incident-tag critical' : 'incident-tag warning');
+
+        return `
+          <div class="${itemClass}">
+            <div class="incident-meta">
+              <div class="incident-header">
+                <span class="${tagClass}">${inc.acknowledged ? 'ACKNOWLEDGED' : inc.threat}</span>
+                <span class="incident-title">${inc.title}</span>
+                <span class="incident-time">${inc.time}</span>
+              </div>
+              <div class="incident-desc">${inc.desc}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-dim); margin-top:2px;">
+                Target: <strong>${inc.freq.toFixed(2)} MHz</strong> (${inc.band}) · Logged By: ${inc.operator} · Status: <strong>${inc.status}</strong>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              ${!inc.acknowledged ? `
+                <button class="btn btn-secondary" style="padding:6px 12px; font-size:12px;" onclick="acknowledgeIncident('${inc.id}')">
+                  Acknowledge Alert
+                </button>
+              ` : `
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--low); font-weight:700;">● SECURED</span>
+              `}
+              <button class="inspect-btn" onclick="applySearchQuery('${inc.freq.toFixed(2)}', 'All')">
+                Tune
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // =========================================================================
+    // MODULE 5: SDR RECEIVER HARDWARE CALIBRATION & DSP PARAMETERS
+    // =========================================================================
+    function updateCalibrationDisplays() {
+      const fftEl = document.getElementById("configFftSize");
+      const dwellEl = document.getElementById("configDwellTime");
+      const sensEl = document.getElementById("configSensitivity");
+      const gainModeEl = document.getElementById("configGainMode");
+      const manualGainEl = document.getElementById("configManualGain");
+      const squelchEl = document.getElementById("configSquelch");
+
+      if (fftEl) document.getElementById("displayFftSize").textContent = `${fftEl.value} Bins`;
+      if (dwellEl) document.getElementById("displayDwellTime").textContent = `${dwellEl.value} ms`;
+      if (sensEl) document.getElementById("displaySensitivity").textContent = `${sensEl.value} dB Threshold`;
+      if (gainModeEl) {
+        document.getElementById("displayGainMode").textContent = gainModeEl.value === 'AGC' ? "AGC Mode (Auto)" : "Manual Gain Tuned";
+        const manualWrap = document.getElementById("manualGainWrap");
+        if (manualWrap) {
+          if (gainModeEl.value === 'Manual') {
+            manualWrap.style.opacity = '1';
+            manualWrap.style.pointerEvents = 'auto';
+          } else {
+            manualWrap.style.opacity = '0.5';
+            manualWrap.style.pointerEvents = 'none';
+          }
+        }
+      }
+      if (manualGainEl) document.getElementById("displayManualGain").textContent = `${parseFloat(manualGainEl.value).toFixed(1)} dB`;
+      if (squelchEl) document.getElementById("displaySquelch").textContent = `${squelchEl.value} dBm`;
+    }
+
+    function saveHardwareConfig() {
+      if (!currentUser.authenticated || !currentUser.clearance.includes("Level 3")) {
+        showToast("Authorization Required", "Level 3 Command Clearance required to modify SDR front-end calibration.", "warning");
+        return;
+      }
+
+      hardwareConfig.fftSize = parseInt(document.getElementById("configFftSize").value) || 2048;
+      hardwareConfig.dwellTime = parseFloat(document.getElementById("configDwellTime").value) || 12.5;
+      hardwareConfig.sensitivity = parseInt(document.getElementById("configSensitivity").value) || 6;
+      hardwareConfig.gainMode = document.getElementById("configGainMode").value;
+      hardwareConfig.manualGain = parseFloat(document.getElementById("configManualGain").value) || 32.8;
+      hardwareConfig.squelch = parseInt(document.getElementById("configSquelch").value) || -95;
+
+      localStorage.setItem('smartscan_hardware_config', JSON.stringify(hardwareConfig));
+
+      // Update Ticker
+      const tickerDsp = document.getElementById("tickerDspMode");
+      if (tickerDsp) tickerDsp.textContent = `ADAPTIVE FFT (${hardwareConfig.fftSize})`;
+
+      showToast("Calibration Synchronized", `DSP FFT size set to ${hardwareConfig.fftSize} bins · Squelch at ${hardwareConfig.squelch} dBm.`, "success");
+      playBeep(1400, 'sine', 0.15);
+      drawSpectrum();
+    }
+
+    function resetHardwareConfig() {
+      hardwareConfig = {
+        fftSize: 2048,
+        dwellTime: 12.5,
+        sensitivity: 6,
+        gainMode: "AGC",
+        manualGain: 32.8,
+        squelch: -95
+      };
+      localStorage.setItem('smartscan_hardware_config', JSON.stringify(hardwareConfig));
+
+      document.getElementById("configFftSize").value = "2048";
+      document.getElementById("configDwellTime").value = "12.5";
+      document.getElementById("configSensitivity").value = "6";
+      document.getElementById("configGainMode").value = "AGC";
+      document.getElementById("configManualGain").value = "32.8";
+      document.getElementById("configSquelch").value = "-95";
+
+      updateCalibrationDisplays();
+      showToast("Factory Calibration Restored", "RTL-SDR v4 DSP parameters reset to defaults.", "info");
+      playBeep(700, 'sine', 0.08);
+      drawSpectrum();
+    }
+
+    // =========================================================================
+    // MODULE 6: MISSION TELEMETRY & AUDIT EXPORT SUITE
+    // =========================================================================
+    function exportMissionReport() {
+      const now = new Date();
+      const hrs = String(Math.floor(missionSeconds / 3600)).padStart(2, "0");
+      const mins = String(Math.floor((missionSeconds % 3600) / 60)).padStart(2, "0");
+      const secs = String(missionSeconds % 60).padStart(2, "0");
+
+      let report = `================================================================================\n`;
+      report += `              SMART SCAN ADAPTIVE SPECTRUM SURVEILLANCE REPORT\n`;
+      report += `================================================================================\n`;
+      report += `Generated At     : ${now.toUTCString()}\n`;
+      report += `Mission Elapsed  : ${hrs}:${mins}:${secs}\n`;
+      report += `Station Operator : ${currentUser.callsign} (${currentUser.name})\n`;
+      report += `Clearance Level  : ${currentUser.clearance}\n`;
+      report += `Station Node     : ${currentUser.station}\n`;
+      report += `Session Token    : ${currentUser.sessionToken}\n\n`;
+
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `1. SDR RECEIVER & DSP HARDWARE CONFIGURATION\n`;
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `Tuner Hardware   : RTL2832U / R820T2 (TCXO 0.5 PPM)\n`;
+      report += `FFT Window Size  : ${hardwareConfig.fftSize} Bins\n`;
+      report += `Dwell Interval   : ${hardwareConfig.dwellTime} ms / Hop\n`;
+      report += `Gain Mode        : ${hardwareConfig.gainMode} (${hardwareConfig.gainMode === 'Manual' ? hardwareConfig.manualGain + ' dB' : 'Auto AGC'})\n`;
+      report += `Squelch Floor    : ${hardwareConfig.squelch} dBm\n`;
+      report += `Sensitivity      : ${hardwareConfig.sensitivity} dB\n\n`;
+
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `2. DETECTED ACTIVE SIGNALS TRIAGE QUEUE (${signals.length} Carriers)\n`;
+      report += `--------------------------------------------------------------------------------\n`;
+      signals.forEach(s => {
+        report += `[${s.id}] ${s.freq.toFixed(2)} MHz | RSSI: ${s.strength} dBm | BW: ${s.bw} kHz | Band: ${s.band || 'RF'} | Priority: ${s.priority.toUpperCase()}\n`;
+      });
+      report += `\n`;
+
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `3. TARGET WATCHLIST (${watchlist.length} Pinned Carriers)\n`;
+      report += `--------------------------------------------------------------------------------\n`;
+      if (watchlist.length === 0) report += `No pinned target carriers.\n`;
+      else {
+        watchlist.forEach(w => {
+          report += `[${w.id}] ${w.freq.toFixed(2)} MHz (${w.band}) - Note: ${w.note || 'None'}\n`;
+        });
+      }
+      report += `\n`;
+
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `4. TACTICAL THREAT INCIDENTS LOG (${threatIncidents.length} Events)\n`;
+      report += `--------------------------------------------------------------------------------\n`;
+      threatIncidents.forEach(inc => {
+        report += `[${inc.id}] ${inc.time} | Threat: ${inc.threat} | Freq: ${inc.freq.toFixed(2)} MHz | Status: ${inc.status}\n`;
+        report += `       Summary: ${inc.title} - ${inc.desc}\n`;
+      });
+      report += `\n`;
+
+      report += `--------------------------------------------------------------------------------\n`;
+      report += `5. RECENT SEARCH & INVESTIGATION AUDIT TRAIL (${searchHistory.length} Queries)\n`;
+      report += `--------------------------------------------------------------------------------\n`;
+      searchHistory.slice(0, 10).forEach(sh => {
+        report += `[${sh.id}] "${sh.query}" (Filter: ${sh.filter}) at ${sh.time} by ${sh.operator} -> ${sh.hits} hits\n`;
+      });
+      report += `\n================================================================================\n`;
+      report += `End of Surveillance Mission Report · Prototype Simulation Console 2026\n`;
+
+      const blob = new Blob([report], { type: 'text/plain;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `smartscan_mission_report_${new Date().toISOString().slice(0, 10)}.txt`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      showToast("Mission Dossier Generated", "Tactical surveillance report downloaded as TXT.", "success");
+    }
+
+    function exportFullTelemetryJSON() {
+      const fullTelemetry = {
+        mission: {
+          timestamp: new Date().toISOString(),
+          uptimeSeconds: missionSeconds,
+          status: "NOMINAL"
+        },
+        operator: currentUser,
+        hardwareConfig: hardwareConfig,
+        signals: signals,
+        watchlist: watchlist,
+        threatIncidents: threatIncidents,
+        searchHistory: searchHistory
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullTelemetry, null, 2));
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `smartscan_telemetry_dump_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Full Backup Exported", "Complete system state dumped as JSON.", "success");
+    }
+
+    // =========================================================================
+    // MODULE NAVIGATION CONTROLLER IN #project
+    // =========================================================================
+    function switchModuleTab(tabId) {
+      const tabs = ['auth', 'history', 'watchlist', 'threats', 'dsp', 'export'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`modTabBtn-${t}`);
+        const panel = document.getElementById(`modPanel-${t}`);
+        if (btn) btn.classList.remove("active");
+        if (panel) panel.classList.remove("active");
+      });
+
+      const activeBtn = document.getElementById(`modTabBtn-${tabId}`);
+      const activePanel = document.getElementById(`modPanel-${tabId}`);
+      if (activeBtn) activeBtn.classList.add("active");
+      if (activePanel) activePanel.classList.add("active");
+
+      if (tabId === 'history') renderSearchHistory();
+      if (tabId === 'watchlist') renderWatchlist();
+      if (tabId === 'threats') renderThreatIncidents();
+      if (tabId === 'auth') updateAuthUI();
+      if (tabId === 'dsp') updateCalibrationDisplays();
+
+      playBeep(980, 'sine', 0.05);
+    }
+
+    // =========================================================================
+    // TABLE VIEW & SIGNAL RENDERING
+    // =========================================================================
+    function setTableView(mode) {
+      currentTableView = mode;
+      const tabAll = document.getElementById("tabViewAll");
+      const tabWatch = document.getElementById("tabViewWatchlist");
+      const tabInc = document.getElementById("tabViewIncidents");
+
+      if (tabAll) tabAll.classList.toggle("active", mode === 'all');
+      if (tabWatch) tabWatch.classList.toggle("active", mode === 'watchlist');
+      if (tabInc) tabInc.classList.toggle("active", mode === 'incidents');
+
+      renderSignals();
+    }
+
+    function renderSignals() {
+      const filter = document.getElementById("filter").value;
+      const search = document.getElementById("search").value.toLowerCase().trim();
+      const tbody = document.getElementById("signalRows");
+      if (!tbody) return;
+
+      if (currentTableView === 'incidents') {
+        if (threatIncidents.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">No active threat incidents reported.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = threatIncidents.map(inc => `
+          <tr>
+            <td style="text-align:center;">🚨</td>
+            <td><span class="signal-id-badge" style="background:var(--high-light); color:var(--high); border:1px solid var(--high-border);">${inc.id}</span></td>
+            <td class="freq-col">${inc.freq.toFixed(2)} MHz</td>
+            <td colspan="2">
+              <strong style="color:var(--text-main); font-size:13.5px;">${inc.title}</strong>
+              <small style="display:block; color:var(--text-dim); font-size:11.5px;">${inc.desc}</small>
+            </td>
+            <td>${inc.band}</td>
+            <td>
+              <span class="priority-pill ${inc.threat.toLowerCase()}">${inc.threat}</span>
+            </td>
+            <td>
+              ${!inc.acknowledged ? `
+                <button class="inspect-btn" onclick="acknowledgeIncident('${inc.id}')">Acknowledge</button>
+              ` : `
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--low); font-weight:700;">Secured</span>
+              `}
+            </td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      let sourceList = signals;
+      if (currentTableView === 'watchlist') {
+        const bookmarkedIds = new Set(watchlist.map(w => w.id));
+        sourceList = signals.filter(s => bookmarkedIds.has(s.id));
+      }
+
+      const filtered = sourceList.filter(s => {
+        const matchesFilter = (filter === "All" || s.priority === filter);
+        const matchesSearch = (
+          s.freq.toString().includes(search) ||
+          s.id.toLowerCase().includes(search) ||
+          (s.band && s.band.toLowerCase().includes(search)) ||
+          (s.priority && s.priority.toLowerCase().includes(search))
+        );
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--text-dim); font-family:'JetBrains Mono', monospace;">No signals match the specified filter criteria.</td></tr>`;
+      } else {
+        tbody.innerHTML = filtered.map(s => {
+          const pct = Math.max(8, Math.min(100, Math.round(((s.strength + 110) / 80) * 100)));
+          const priorityClass = s.priority.toLowerCase();
+          const fillColor = s.strength > -50 ? 'var(--high)' : s.strength > -75 ? 'var(--medium)' : 'var(--low)';
+          const isPinned = isSignalBookmarked(s.id);
+
+          return `
+            <tr>
+              <td style="text-align:center;">
+                <button class="bookmark-btn ${isPinned ? 'active' : ''}" onclick="toggleWatchlist('${s.id}')" title="${isPinned ? 'Remove from Watchlist' : 'Pin to Watchlist'}">
+                  ${isPinned ? '★' : '☆'}
+                </button>
+              </td>
+              <td><span class="signal-id-badge">${s.id}</span></td>
+              <td class="freq-col">${s.freq.toFixed(2)} MHz</td>
+              <td>
+                <div class="strength-cell">
+                  <span style="font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:600;">${s.strength} dBm</span>
+                  <div class="meter-bar-bg" title="${pct}% signal level">
+                    <div class="meter-bar-fill" style="width: ${pct}%; background: ${fillColor};"></div>
+                  </div>
+                </div>
+              </td>
+              <td style="font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:600;">${s.bw} kHz</td>
+              <td>
+                <span style="font-size:13.5px; font-weight:700; color:var(--text-main);">${s.band || 'RF Carrier'}</span>
+                <small style="display:block; color:var(--text-dim); font-size:11.5px; font-family:'JetBrains Mono', monospace;">${s.mod || 'Raw IQ'}</small>
+              </td>
+              <td>
+                <span class="priority-pill ${priorityClass}">
+                  ${s.priority === 'High' ? '● CRITICAL' : s.priority === 'Medium' ? '● MEDIUM' : '● ROUTINE'}
+                </span>
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button class="inspect-btn" onclick="inspectSignal('${s.id}')">Inspect</button>
+                  <button class="inspect-btn" onclick="toggleWatchlist('${s.id}')" title="Pin / Unpin">${isPinned ? 'Unpin' : 'Pin'}</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      // Update counters
+      const totalEl = document.getElementById("total");
+      if (totalEl) totalEl.textContent = String(signals.length).padStart(2, "0");
+
+      const badgeSignals = document.getElementById("totalSignalsBadge");
+      if (badgeSignals) badgeSignals.textContent = signals.length;
+
+      const badgeWatchlist = document.getElementById("watchlistCountBadge");
+      if (badgeWatchlist) badgeWatchlist.textContent = watchlist.length;
+
+      ["High", "Medium", "Low"].forEach(p => {
+        const count = signals.filter(s => s.priority === p).length;
+        const el = document.getElementById(p.toLowerCase());
+        if (el) el.textContent = String(count).padStart(2, "0");
+      });
+    }
+
+    // Toggle Monitoring
+    function toggleMonitoring() {
+      active = !active;
+      const toggleBtn = document.getElementById("toggle");
+      const statusEl = document.getElementById("status");
+      const headerStatus = document.getElementById("headerStatus");
+
+      if (active) {
+        toggleBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+          Stop Monitoring
+        `;
+        toggleBtn.className = "btn btn-primary";
+        statusEl.className = "status";
+        statusEl.innerHTML = `<span class="pulse-dot"></span> Demo Active`;
+        if (headerStatus) headerStatus.textContent = "RECEIVER LINKED";
+        playBeep(980, 'sine', 0.08);
+      } else {
+        toggleBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Resume Monitoring
+        `;
+        toggleBtn.className = "btn btn-secondary";
+        statusEl.className = "status paused";
+        statusEl.innerHTML = `● Demo Paused`;
+        if (headerStatus) headerStatus.textContent = "TUNER STANDBY";
+        playBeep(440, 'triangle', 0.1);
+      }
+    }
+
+    // Add Simulated Signal
+    function addSignal() {
+      if (!currentUser.authenticated || !currentUser.clearance.includes("Level 3")) {
+        showToast("Access Restricted", "Level 3 Command Clearance required to inject RF bursts into the receiver.", "warning");
+        return;
+      }
+
+      const priorities = ["High", "Medium", "Low"];
+      const bands = [
+        { band: "VHF Airband", min: 118, max: 136, mod: "AM Voice", bw: 25 },
+        { band: "ISM 433 MHz", min: 433.05, max: 434.79, mod: "FSK Sensor", bw: 125 },
+        { band: "Marine VHF", min: 156, max: 162, mod: "FM NFM", bw: 25 },
+        { band: "LoRa WAN", min: 863, max: 870, mod: "LoRa CSS", bw: 250 },
+        { band: "ISM 2.4G Burst", min: 2410, max: 2470, mod: "FHSS DSSS", bw: 500 },
+        { band: "Rogue Emitter", min: 920, max: 960, mod: "Hopping Pulse", bw: 300 }
+      ];
+
+      const chosenBand = bands[Math.floor(Math.random() * bands.length)];
+      const freq = Math.round((chosenBand.min + Math.random() * (chosenBand.max - chosenBand.min)) * 100) / 100;
+      const strength = Math.round(-30 - Math.random() * 65);
+      const chosenPriority = strength > -45 ? "High" : priorities[Math.floor(Math.random() * 3)];
+      const newId = "RF-" + String(counter++).padStart(3, "0");
+
+      signals.unshift({
+        id: newId,
+        freq: freq,
+        strength: strength,
+        bw: chosenBand.bw,
+        priority: chosenPriority,
+        band: chosenBand.band,
+        mod: chosenBand.mod,
+        snr: Math.max(3, Math.round(strength + 110))
+      });
+
+      burstsAnalyzedCount++;
+      const burstsEl = document.getElementById("statBurstsAnalyzed");
+      if (burstsEl) burstsEl.textContent = burstsAnalyzedCount;
+
+      if (chosenPriority === "High") {
+        recordIncident(freq, chosenBand.band, "CRITICAL", `Suspicious Burst on ${chosenBand.band}`, `Uncorrelated RF transmission detected at ${freq.toFixed(2)} MHz.`);
+      } else {
+        playBeep(750, 'sine', 0.08);
+        showToast("Signal Intercepted", `New carrier ${newId} logged at ${freq.toFixed(2)} MHz.`, "info");
+      }
+
+      renderSignals();
+    }
+
+    // Preset Injection
+    function injectPreset(type) {
+      if (!currentUser.authenticated || !currentUser.clearance.includes("Level 3")) {
+        showToast("Access Restricted", "Level 3 Command Clearance required to inject test presets.", "warning");
+        return;
+      }
+
+      let sig = null;
+      if (type === 'ISM-433') {
+        sig = { freq: 433.92, strength: -46, bw: 125, priority: "Medium", band: "ISM 433 MHz", mod: "ASK/OOK Remote", snr: 22 };
+      } else if (type === 'LoRa-868') {
+        sig = { freq: 868.10, strength: -62, bw: 125, priority: "Medium", band: "LoRa EU868", mod: "LoRa SF7", snr: 16 };
+      } else if (type === 'ADSB-1090') {
+        sig = { freq: 1090.00, strength: -85, bw: 100, priority: "Low", band: "ADS-B Flight Radar", mod: "PPM Mode-S", snr: 8 };
+      } else if (type === 'GPS-1575') {
+        sig = { freq: 1575.42, strength: -78, bw: 200, priority: "Low", band: "GPS L1 Coarse", mod: "CDMA BPSK", snr: 12 };
+      } else if (type === 'DRONE-2400') {
+        sig = { freq: 2437.00, strength: -32, bw: 500, priority: "High", band: "Drone C2 Link", mod: "Encrypted FHSS", snr: 36 };
+      }
+
+      if (sig) {
+        sig.id = "RF-" + String(counter++).padStart(3, "0");
+        signals.unshift(sig);
+        burstsAnalyzedCount++;
+        const burstsEl = document.getElementById("statBurstsAnalyzed");
+        if (burstsEl) burstsEl.textContent = burstsAnalyzedCount;
+
+        renderSignals();
+
+        if (sig.priority === "High") {
+          recordIncident(sig.freq, sig.band, "CRITICAL", "Hostile Drone C2 Uplink Intercepted", "High-power spread spectrum frame detected in 2.4 GHz band.");
+        } else {
+          playBeep(900, 'sine', 0.08);
+          showToast("Preset Injected", `${sig.band} injected at ${sig.freq.toFixed(2)} MHz.`, "info");
+        }
+      }
+    }
+
+    // Export CSV
+    function exportCSV() {
+      let csv = "Signal ID,Frequency (MHz),Strength (dBm),Bandwidth (kHz),Band,Modulation,Priority,Bookmarked\n";
+      signals.forEach(s => {
+        const isPinned = isSignalBookmarked(s.id) ? "YES" : "NO";
+        csv += `"${s.id}","${s.freq}","${s.strength}","${s.bw}","${s.band}","${s.mod}","${s.priority}","${isPinned}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `smartscan_signals_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("CSV Exported", "Signal telemetry database downloaded.", "success");
+    }
+
+    // Modal Inspector
+    function inspectSignal(id) {
+      const s = signals.find(item => item.id === id);
+      if (!s) return;
+      inspectingSignalId = id;
+
+      document.getElementById("modalSignalId").textContent = `${s.id} OBSERVATION`;
+      document.getElementById("modalBand").textContent = `ALLOCATION: ${s.band || 'UNASSIGNED RF'}`;
+      document.getElementById("modalFreq").textContent = `${s.freq.toFixed(2)} MHz`;
+      document.getElementById("modalStrength").textContent = `${s.strength} dBm`;
+      document.getElementById("modalBw").textContent = `${s.bw} kHz`;
+      document.getElementById("modalSnr").textContent = `+${s.snr || 18} dB`;
+      document.getElementById("modalMod").textContent = s.mod || "Unknown";
+
+      const priorityEl = document.getElementById("modalPriority");
+      priorityEl.textContent = s.priority.toUpperCase();
+      priorityEl.style.color = s.priority === "High" ? "var(--high)" : s.priority === "Medium" ? "var(--medium)" : "var(--low)";
+
+      updateModalWatchlistBtn(id);
+
+      document.getElementById("signalModal").classList.add("active");
+    }
+
+    function lockSignalFrequency() {
+      if (!inspectingSignalId) return;
+      const s = signals.find(item => item.id === inspectingSignalId);
+      if (s) {
+        showToast("Carrier Locked", `Receiver dwell locked onto ${s.freq.toFixed(2)} MHz (${s.id}).`, "success");
+        playBeep(1500, 'sine', 0.15);
+      }
+      closeModal();
+    }
+
+    function closeModal() {
+      document.getElementById("signalModal").classList.remove("active");
+      inspectingSignalId = null;
+    }
+
+    window.onclick = function(event) {
+      ['signalModal', 'authModal', 'searchHistoryModal', 'addWatchlistModal'].forEach(id => {
+        const m = document.getElementById(id);
+        if (event.target === m) m.classList.remove("active");
+      });
+    };
+
+    // Canvas Spectrum Rendering Loop
+    let phase = 0;
+    const canvas = document.getElementById("spectrum");
+    const ctx = canvas.getContext("2d");
+
+    let mouseX = -1;
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      const width = canvas.clientWidth;
+      const freq = (400 + (mouseX / width) * 2100).toFixed(2);
+      const hud = document.getElementById("canvasHud");
+      if (hud) hud.textContent = `CURSOR: ${freq} MHz | TUNED: AUTO | SQUELCH: ${hardwareConfig.squelch} dBm`;
+    });
+    canvas.addEventListener("mouseleave", () => {
+      mouseX = -1;
+      const hud = document.getElementById("canvasHud");
+      if (hud) hud.textContent = `ACTIVE PEAKS: ${signals.length} | DWELL: ${hardwareConfig.dwellTime}ms`;
+    });
+
+    function drawSpectrum() {
+      const isDark = (document.documentElement.getAttribute('data-theme') === 'dark');
+      const width = canvas.clientWidth || 800;
+      const height = 250;
+      const ratio = window.devicePixelRatio || 1;
+
+      if (canvas.width !== width * ratio || canvas.height !== height * ratio) {
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+      }
+
+      ctx.save();
+      ctx.scale(ratio, ratio);
+      ctx.clearRect(0, 0, width, height);
+
+      // Grid Lines & dBm Axis Labels
+      ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.1)" : "rgba(148, 163, 184, 0.25)";
+      ctx.lineWidth = 1;
+      const gridStepsY = 5;
+      ctx.fillStyle = isDark ? "rgba(148, 163, 184, 0.6)" : "#64748b";
+      ctx.font = "11px 'JetBrains Mono', monospace";
+
+      for (let i = 0; i <= gridStepsY; i++) {
+        const y = 20 + i * ((height - 45) / gridStepsY);
+        ctx.beginPath();
+        ctx.moveTo(40, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+
+        const dbm = -120 + ((gridStepsY - i) * 20);
+        ctx.fillText(`${dbm}`, 6, y + 4);
+      }
+
+      // Frequency bottom axis marks
+      const freqSteps = 6;
+      for (let j = 0; j <= freqSteps; j++) {
+        const x = 40 + j * ((width - 50) / freqSteps);
+        ctx.beginPath();
+        ctx.moveTo(x, height - 25);
+        ctx.lineTo(x, height - 20);
+        ctx.stroke();
+        const f = Math.round(400 + j * (2100 / freqSteps));
+        ctx.fillText(`${f}M`, x - 14, height - 8);
+      }
+
+      // Squelch Cutoff Line (based on hardwareConfig.squelch)
+      const squelchNorm = (hardwareConfig.squelch - (-120)) / 100;
+      const squelchY = (height - 25) - (squelchNorm * (height - 45));
+      ctx.strokeStyle = "rgba(225, 29, 72, 0.4)";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(40, squelchY);
+      ctx.lineTo(width, squelchY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(225, 29, 72, 0.7)";
+      ctx.font = "9.5px 'JetBrains Mono', monospace";
+      ctx.fillText(`SQUELCH ${hardwareConfig.squelch} dBm`, width - 110, squelchY - 4);
+
+      if (active) {
+        phase += 0.05;
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(40, height - 25);
+
+      const baseline = height - 32;
+      const points = [];
+
+      // Trace resolution influenced by hardwareConfig.fftSize
+      const step = hardwareConfig.fftSize === 4096 ? 2 : hardwareConfig.fftSize === 1024 ? 4 : 3;
+
+      for (let x = 40; x < width; x += step) {
+        let noise = active ? (Math.sin(x * 0.05 + phase) * 8 + Math.cos(x * 0.02 - phase) * 6 + (Math.random() * 8)) : 2;
+
+        const currentFreq = 400 + ((x - 40) / (width - 50)) * 2100;
+        signals.forEach(s => {
+          const deltaF = Math.abs(currentFreq - s.freq);
+          if (deltaF < 40) {
+            const peakHeight = Math.max(0, (40 - deltaF) / 40) * (Math.abs(s.strength) * 1.35);
+            noise += peakHeight;
+          }
+        });
+
+        const y = Math.max(16, baseline - noise);
+        points.push({ x, y });
+        ctx.lineTo(x, y);
+      }
+
+      // Fill vibrant gradient under waveform
+      const gradient = ctx.createLinearGradient(0, 0, 0, height);
+      if (isDark) {
+        gradient.addColorStop(0, "rgba(0, 242, 254, 0.4)");
+        gradient.addColorStop(0.5, "rgba(99, 102, 241, 0.15)");
+        gradient.addColorStop(1, "rgba(4, 8, 16, 0.0)");
+      } else {
+        gradient.addColorStop(0, "rgba(79, 70, 229, 0.35)");
+        gradient.addColorStop(0.4, "rgba(6, 182, 212, 0.2)");
+        gradient.addColorStop(0.8, "rgba(236, 72, 153, 0.1)");
+        gradient.addColorStop(1, "rgba(248, 250, 252, 0.0)");
+      }
+
+      ctx.lineTo(width, height - 25);
+      ctx.lineTo(40, height - 25);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Stroke waveform line
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.strokeStyle = active ? (isDark ? "#00f2fe" : "#4f46e5") : "#94a3b8";
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = active ? (isDark ? "rgba(0, 242, 254, 0.8)" : "rgba(79, 70, 229, 0.4)") : "transparent";
+      ctx.shadowBlur = active ? 8 : 0;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Draw peak labels for top signals
+      if (active) {
+        signals.slice(0, 5).forEach(s => {
+          const x = 40 + ((s.freq - 400) / 2100) * (width - 50);
+          if (x >= 40 && x <= width - 30) {
+            const y = baseline - (Math.abs(s.strength) * 1.35);
+            const peakColor = s.priority === "High" ? "#e11d48" : s.priority === "Medium" ? "#d97706" : "#059669";
+
+            ctx.fillStyle = peakColor;
+            ctx.beginPath();
+            ctx.arc(x, Math.max(25, y - 5), 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(x, Math.max(25, y - 5), 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = peakColor;
+            ctx.font = "bold 10px 'JetBrains Mono', monospace";
+            ctx.fillText(`${s.id}`, x - 14, Math.max(16, y - 10));
+          }
+        });
+      }
+
+      // Mouse Crosshair
+      if (mouseX >= 40 && mouseX <= width) {
+        ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.5)" : "rgba(79, 70, 229, 0.5)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(mouseX, 15);
+        ctx.lineTo(mouseX, height - 25);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      ctx.restore();
+      requestAnimationFrame(drawSpectrum);
+    }
+
+    // Initialize All System Modules
+    updateAuthUI();
+    renderSignals();
+    renderSearchHistory();
+    renderWatchlist();
+    renderThreatIncidents();
+    updateCalibrationDisplays();
+    requestAnimationFrame(drawSpectrum);
+    window.addEventListener("resize", () => {
+      drawSpectrum();
+    });
+  </script>
+</body>
+</html>
