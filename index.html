@@ -4632,5 +4632,186 @@
       drawSpectrum();
     });
   </script>
-</body>
+<style>
+#smartScanLogin {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle at top left, #e9ddff, transparent 50%),
+    linear-gradient(135deg, #f8f7ff, #eeeaff);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-y: auto;
+}
+#smartScanLogin .login-card {
+  width: 100%;
+  max-width: 470px;
+  background: white;
+  padding: 42px 35px;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 20px 65px rgba(91, 54, 160, .13);
+}
+#smartScanLogin .login-logo {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 22px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 36px;
+  background: linear-gradient(135deg,#9b5cf6,#642de5);
+}
+#smartScanLogin h1 {
+  font-size: 32px;
+  color: #17152e;
+  margin-bottom: 8px;
+}
+#smartScanLogin .subtitle {
+  color: #9290a3;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+#smartScanLogin .login-field {
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 17px;
+  border: 1.5px solid #dedbea;
+  border-radius: 14px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+}
+#smartScanLogin .login-field:focus {
+  border-color: #8545ee;
+}
+#smartScanLogin .password-wrap {
+  position: relative;
+}
+#smartScanLogin .password-wrap input {
+  padding-right: 65px;
+}
+#smartScanLogin .show-pass {
+  position: absolute;
+  right: 16px;
+  top: 19px;
+  border: 0;
+  background: none;
+  color: #8044d8;
+  cursor: pointer;
+}
+#smartScanLogin .forgot {
+  display: block;
+  text-align: right;
+  color: #7441c7;
+  cursor: pointer;
+  margin: 0 0 25px;
+  font-size: 14px;
+}
+#smartScanLogin .login-button {
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  border-radius: 14px;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(100deg,#a15cf5,#6528e9);
+  box-shadow: 0 8px 22px #8750e544;
+}
+#smartScanLogin .login-button:hover {
+  transform: translateY(-2px);
+}
+#smartScanLogin .login-error {
+  color: #dc3545;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+#smartScanLogin .login-footer {
+  margin-top: 24px;
+  color: #9995aa;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+@media(max-width:480px) {
+  #smartScanLogin .login-card {
+    padding: 35px 23px;
+  }
+}
+</style>
+
+<div id="smartScanLogin">
+  <div class="login-card">
+    <div class="login-logo">📡</div>
+    <h1>Welcome Back!</h1>
+    <p class="subtitle">
+      Login to access your Smart Scan dashboard
+    </p>
+
+    <form id="smartScanLoginForm">
+      <input
+        class="login-field"
+        type="email"
+        id="smartScanEmail"
+        placeholder="Email Address"
+        required
+      >
+
+      <div class="password-wrap">
+        <input
+          class="login-field"
+          type="password"
+          id="smartScanPassword"
+          placeholder="Password"
+          required
+        >
+        <button type="button" class="show-pass"
+          id="smartScanShow">Show</button>
+      </div>
+
+      <div class="forgot" id="smartScanForgot">
+        Forgot Password?
+      </div>
+
+      <div class="login-error" id="smartScanError"></div>
+
+      <button type="submit" class="login-button">
+        Login →
+      </button>
+    </form>
+
+    <div class="login-footer">
+      SMART SCAN · SPECTRUM INTELLIGENCE
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("smartScanShow").onclick = function() {
+  const pass = document.getElementById("smartScanPassword");
+  pass.type = pass.type === "password" ? "text" : "password";
+  this.textContent = pass.type === "password" ? "Show" : "Hide";
+};
+
+document.getElementById("smartScanForgot").onclick = function() {
+  alert("Please contact your Smart Scan administrator to reset your password.");
+};
+
+document.getElementById("smartScanLoginForm").onsubmit = function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("smartScanEmail").value;
+  const password = document.getElementById("smartScanPassword").value;
+
+  if (email && password) {
+    document.getElementById("smartScanLogin").style.display = "none";
+  }
+};
+</script></body>
 </html>
